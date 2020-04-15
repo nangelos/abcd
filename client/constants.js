@@ -4,3 +4,14 @@ export const schoolList = [
   'North Elementary',
   'South Elementary'
 ]
+
+export const gradesList = [
+  'Pre-K',
+  'Kindergarten',
+  'First',
+  'Second',
+  'Third',
+  'Fourth',
+  'Fifth',
+  'Sixth'
+]

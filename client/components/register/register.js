@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {schoolList} from '../constants'
+import {schoolList, gradesList} from '../../constants'
 
 class Register extends Component {
   state = {
@@ -36,16 +36,18 @@ class Register extends Component {
             onChange={this.handleTextboxChange}
           />
           <select name="schoolName" onChange={this.handleTextboxChange}>
-            School
-            <option value="West Elementary">West Elementary</option>
-            <option value="East Elementary">East Elementary</option>
-            <option value="North Elementary">North Elementary </option>
-            <option value="South Elementary">South Elementary </option>
+            {schoolList.map((option, i) => (
+              <option key={i} value={option}>
+                {option}
+              </option>
+            ))}
           </select>
           <select name="grade" onChange={this.handleTextboxChange}>
-            <option value="Pre-K">Pre-K</option>
-            <option value="K">Kindergarten</option>
-            <option value="First">First</option>
+            {gradesList.map((option, i) => (
+              <option key={i} value={option}>
+                {option}
+              </option>
+            ))}
           </select>
           <input type="submit" value="Register" />
         </form>
