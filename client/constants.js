@@ -15,3 +15,5 @@ export const gradesList = [
   'Fifth',
   'Sixth'
 ]
+
+export const daysList = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']

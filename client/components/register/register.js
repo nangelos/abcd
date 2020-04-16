@@ -1,12 +1,14 @@
 import React, {Component} from 'react'
-import {schoolList, gradesList} from '../../constants'
+import {Day} from './day'
+import {schoolList, gradesList, daysList} from '../../constants'
 
 class Register extends Component {
   state = {
     studentFirst: '',
     studentLast: '',
     schoolName: 'West Elementary',
-    grade: 'Pre-K'
+    grade: 'Pre-K',
+    daysRegistered: []
   }
 
   handleTextboxChange = evt => {
@@ -49,6 +51,13 @@ class Register extends Component {
               </option>
             ))}
           </select>
+          <div id="days-row">
+            {daysList.map((val, i) => (
+              <div className="day-box" key={i} value={val}>
+                <h3>{val}</h3>
+              </div>
+            ))}
+          </div>
           <input type="submit" value="Register" />
         </form>
       </div>

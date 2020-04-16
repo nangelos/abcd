@@ -19,3 +19,17 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+#days-row {
+  display: flex;
+}
+
+.day-box {
+  height: 150px;
+  width: 150px;
+  border: 2px black solid;
+  /* text-align: center; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
