@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
+import styled from 'styled-components'
 import {Day} from './day'
+import ParentInfo from './parent-info'
 import {schoolList, gradesList, daysList} from '../../constants'
 
 class Register extends Component {
@@ -8,7 +10,11 @@ class Register extends Component {
     studentLast: '',
     schoolName: 'West Elementary',
     grade: 'Pre-K',
-    daysRegistered: []
+    mondayRegistered: false,
+    tuesdayRegistered: false,
+    wednesdayRegistered: false,
+    thursdayRegistered: false,
+    fridayRegistered: false
   }
 
   handleTextboxChange = evt => {
@@ -26,6 +32,7 @@ class Register extends Component {
     return (
       <div>
         <h2>Register Your Student</h2>
+        <ParentInfo />
         <form onSubmit={this.handleSubmit}>
           <input
             name="studentFirst"
