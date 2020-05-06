@@ -4,6 +4,16 @@ import {Day} from './day'
 import ParentInfo from './parent-info'
 import {schoolList, gradesList, daysList} from '../../constants'
 
+const DayButton = styled.button`
+  height: 150px;
+  width: 150px;
+  border: 2px black solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  type="submit"
+`
+
 class Register extends Component {
   state = {
     studentFirst: '',
@@ -20,6 +30,17 @@ class Register extends Component {
   handleTextboxChange = evt => {
     let {name, value} = evt.target
     this.setState({[name]: value.toUpperCase()})
+    console.log(this.state)
+  }
+
+  changeBinary = evt => {
+    evt.preventDefault()
+    let {name, value} = evt.target
+    let newName = `${name.toLowerCase()}Registered`
+    console.log('name: ', name, 'value: ', value)
+    let newValue = !value
+    console.log('newName: ', newName, 'newValue', newValue)
+    this.setState({[newName]: newValue})
     console.log(this.state)
   }
 
@@ -59,10 +80,17 @@ class Register extends Component {
             ))}
           </select>
           <div id="days-row">
-            {daysList.map((val, i) => (
-              <div className="day-box" key={i} value={val}>
+            {daysList.map(val => (
+              // <div className="day-box" key={val} value={val}>
+              <DayButton
+                key={val}
+                name={val}
+                value={this.state[name]}
+                onClick={this.changeBinary}
+              >
                 <h3>{val}</h3>
-              </div>
+              </DayButton>
+              // </div>
             ))}
           </div>
           <input type="submit" value="Register" />

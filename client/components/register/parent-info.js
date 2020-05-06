@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
+import {stateList} from '../../constants'
 
 const Parent = styled.div`
   display: flex;
@@ -7,10 +8,12 @@ const Parent = styled.div`
   background: purple;
   width: 100%;
   margin: 10px;
+  padding: 5px;
 `
 const InfoInput = styled.input`
-  // width: 50px;
+  margin: 10px;
   font-size: large;
+  text-align: center;
 `
 
 class ParentInfo extends Component {
@@ -22,7 +25,7 @@ class ParentInfo extends Component {
     parentEmail: '',
     parentAddress: '',
     parentCity: '',
-    parentState: '',
+    parentState: 'AL',
     parentZip: '',
     eContactName1: '',
     eContactPhone1: '',
@@ -36,21 +39,25 @@ class ParentInfo extends Component {
     console.log(this.state)
   }
 
+  handleSubmit = evt => {
+    evt.preventDefault()
+    console.log(evt)
+  }
+
   render() {
     return (
       <Parent>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <InfoInput
-            name="parenttFirst"
+            name="parentFirst"
             placeholder="Parent First Name"
             onChange={this.handleTextboxChange}
           />
           <InfoInput
-            name="parenttLast"
+            name="parentLast"
             placeholder="Parent Last Name"
             onChange={this.handleTextboxChange}
           />
-          <br />
           <InfoInput
             name="parentCell"
             placeholder="Cell Phone Number"
@@ -59,6 +66,65 @@ class ParentInfo extends Component {
           <InfoInput
             name="parentWork"
             placeholder="Work Phone Number"
+            onChange={this.handleTextboxChange}
+          />
+          <br />
+          <InfoInput
+            name="parentEmail"
+            placeholder="Email Address"
+            onChange={this.handleTextboxChange}
+          />
+          <InfoInput
+            name="parentAddress"
+            placeholder="Home Address"
+            onChange={this.handleTextboxChange}
+          />
+          <InfoInput
+            name="parentCity"
+            placeholder="City"
+            onChange={this.handleTextboxChange}
+          />
+          <select
+            name="parentState"
+            onChange={this.handleTextboxChange}
+            style={{fontSize: 'large'}}
+          >
+            {stateList.map((st, i) => {
+              return (
+                <option key={i} value={st}>
+                  {st}
+                </option>
+              )
+            })}
+          </select>
+          <InfoInput
+            name="parentZip"
+            placeholder="Zip Code"
+            style={{width: '90px'}}
+            onChange={this.handleTextboxChange}
+          />
+          <h2>Emergency Contacts</h2>
+          <InfoInput
+            name="eContactName1"
+            placeholder="First Contact"
+            onChange={this.handleTextboxChange}
+            style={{width: '300px'}}
+          />
+          <InfoInput
+            name="eContactPhone1"
+            placeholder="First Contact Phone"
+            onChange={this.handleTextboxChange}
+          />
+          <br />
+          <InfoInput
+            name="eContactName2"
+            placeholder="Second Contact"
+            onChange={this.handleTextboxChange}
+            style={{width: '300px'}}
+          />
+          <InfoInput
+            name="eContactPhone2"
+            placeholder="Second Contact Phone"
             onChange={this.handleTextboxChange}
           />
         </form>
