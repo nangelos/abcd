@@ -5,20 +5,15 @@ import {
   InfoInput,
   primaryColor,
   secondaryColor,
+  InfoRow,
 } from '../../constants'
 
 const ParentWrapper = styled.div`
   width: 90%;
-  background: rgb(225, 215, 223);
+  background: ${secondaryColor};
   margin: 10px;
   padding: 5px;
   display: inline-block;
-`
-const InfoRow = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 8px;
-  margin-bottom: 8px;
 `
 
 class ParentInfo extends Component {
@@ -40,7 +35,7 @@ class ParentInfo extends Component {
 
   handleTextboxChange = (evt) => {
     let {name, value} = evt.target
-    this.setState({[name]: value.toUpperCase()})
+    this.setState({[name]: value})
     console.log(this.state)
   }
 
