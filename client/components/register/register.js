@@ -5,6 +5,8 @@ import ParentInfo from './parent-info'
 import {schoolList, gradesList, daysList} from '../../constants'
 
 const DayButton = styled.button`
+  // font-weight: ${props => (props.selected ? 'bold' : 'normal')};
+  // background: ${props => (props.selected ? 'purple' : 'white')};
   height: 150px;
   width: 150px;
   border: 2px black solid;
@@ -36,12 +38,18 @@ class Register extends Component {
   changeBinary = evt => {
     evt.preventDefault()
     let {name, value} = evt.target
-    let newName = `${name.toLowerCase()}Registered`
+    console.log('first take, Name: ', name, ' value: ', value)
+    if (value === 'false') {
+      value = false
+    } else {
+      value = true
+    }
     console.log('name: ', name, 'value: ', value)
+    let newName = `${name.toLowerCase()}Registered`
     let newValue = !value
-    console.log('newName: ', newName, 'newValue', newValue)
-    this.setState({[newName]: newValue})
-    console.log(this.state)
+    console.log('name: ', name, 'newValue', newValue)
+    // this.setState({[newName]: newValue})
+    // console.log(this.state)
   }
 
   handleSubmit = evt => {
@@ -80,18 +88,22 @@ class Register extends Component {
             ))}
           </select>
           <div id="days-row">
-            {daysList.map(val => (
-              // <div className="day-box" key={val} value={val}>
-              <DayButton
-                key={val}
-                name={val}
-                value={this.state[name]}
-                onClick={this.changeBinary}
-              >
-                <h3>{val}</h3>
-              </DayButton>
-              // </div>
-            ))}
+            {daysList ? (
+              daysList.map(val => (
+                // <div className="day-box" key={val} value={val}>
+                <DayButton
+                  key={val}
+                  name={val}
+                  value={this.state[`${val.toLowerCase()}Registered`]}
+                  // selected={this.props.selected}
+                  onClick={this.changeBinary}
+                >
+                  <h3>{val}</h3>
+                </DayButton>
+              ))
+            ) : (
+              <h8>Loading...</h8>
+            )}
           </div>
           <input type="submit" value="Register" />
         </form>
