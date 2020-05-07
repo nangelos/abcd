@@ -8,6 +8,8 @@ import {
   primaryColor,
   secondaryColor,
   InfoInput,
+  InfoRow,
+  infoString,
 } from '../../constants'
 
 const DayButton = styled.button`
@@ -15,7 +17,7 @@ const DayButton = styled.button`
   background: ${(props) => (props.selected ? primaryColor : 'white')};
   color: ${(props) => (props.selected ? 'white' : 'black')};
   border: ${(props) =>
-    props.selected ? `5px ${secondaryColor} solid` : '2px black solid'};
+    props.selected ? `5px black solid` : '2px black solid'};
   font-size: x-large;
   font-weight: normal;
   height: 160px;
@@ -25,6 +27,13 @@ const DayButton = styled.button`
   justify-content: center;
   type="submit"
 `
+const StudentWrapper = styled.div`
+  width: 90%;
+  background: ${secondaryColor};
+  margin: 10px;
+  padding: 5px;
+  display: inline-block;
+`
 
 class Register extends Component {
   state = {
@@ -32,16 +41,18 @@ class Register extends Component {
     studentLast: '',
     schoolName: 'West Elementary',
     grade: 'Pre-K',
+    teacherName: '',
     mondayRegistered: false,
     tuesdayRegistered: false,
     wednesdayRegistered: false,
     thursdayRegistered: false,
     fridayRegistered: false,
+    additionalInfo: '',
   }
 
   handleTextboxChange = (evt) => {
     let {name, value} = evt.target
-    this.setState({[name]: value.toUpperCase()})
+    this.setState({[name]: value})
     console.log(this.state)
   }
 
@@ -59,70 +70,95 @@ class Register extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{textAlign: 'center'}}>
         <h2>Register Your Student</h2>
         <ParentInfo />
         <h2 style={{textAlign: 'center'}}>Student Information</h2>
-        <form onSubmit={this.handleSubmit}>
-          <div style={{display: 'flex', justifyContent: 'space-around'}}>
-            <InfoInput
-              name="studentFirst"
-              placeholder="Student First Name"
-              onChange={this.handleTextboxChange}
-            />
-            <InfoInput
-              name="studentLast"
-              placeholder="Student Last Name"
-              onChange={this.handleTextboxChange}
-            />
-            <select
-              name="schoolName"
-              style={{fontSize: 'large', height: '30px', margin: '10px'}}
-              onChange={this.handleTextboxChange}
-            >
-              {schoolList.map((option, i) => (
-                <option key={i} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-            <select
-              name="grade"
-              style={{fontSize: 'large', height: '30px', margin: '10px'}}
-              onChange={this.handleTextboxChange}
-            >
-              {gradesList.map((option, i) => (
-                <option key={i} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div>
-          <h2 style={{textAlign: 'center'}}>Select Days for Registration</h2>
-          <div id="days-row">
-            {daysList ? (
-              daysList.map((val) => (
-                <DayButton
-                  key={val}
-                  name={val}
-                  selected={this.state[`${val.toLowerCase()}Registered`]}
-                  onClick={(evt) =>
-                    this.changeBinary(
-                      evt,
-                      val,
-                      this.state[`${val.toLowerCase()}Registered`]
-                    )
-                  }
-                >
-                  <h3>{val}</h3>
-                </DayButton>
-              ))
-            ) : (
-              <h8>Loading...</h8>
-            )}
-          </div>
-          <input type="submit" value="Register" />
-        </form>
+        <StudentWrapper>
+          <form onSubmit={this.handleSubmit}>
+            <InfoRow>
+              <p style={{width: '120px'}}>Full Name</p>
+              <InfoInput
+                name="studentFirst"
+                placeholder="Student First Name"
+                onChange={this.handleTextboxChange}
+              />
+              <InfoInput
+                name="studentLast"
+                placeholder="Student Last Name"
+                onChange={this.handleTextboxChange}
+              />
+            </InfoRow>
+            <InfoRow>
+              <p style={{width: '120px'}}>School Info</p>
+              <select
+                name="schoolName"
+                style={{fontSize: 'large', height: '30px', margin: '10px'}}
+                onChange={this.handleTextboxChange}
+              >
+                {schoolList.map((option, i) => (
+                  <option key={i} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+              <select
+                name="grade"
+                style={{fontSize: 'large', height: '30px', margin: '10px'}}
+                onChange={this.handleTextboxChange}
+              >
+                {gradesList.map((option, i) => (
+                  <option key={i} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+              <InfoInput
+                name="teacherName"
+                placeholder="Teacher's Name"
+                onChange={this.handleTextboxChange}
+              />
+            </InfoRow>
+            <InfoRow>
+              <p style={{width: '120px'}}>Addtional Info</p>
+              <textarea
+                name="additionalInfo"
+                onChange={this.handleTextboxChange}
+                placeholder={infoString}
+                style={{
+                  width: '400px',
+                  height: '250px',
+                  margin: '5px',
+                  fontSize: 'medium',
+                }}
+              ></textarea>
+            </InfoRow>
+            <h2 style={{textAlign: 'center'}}>Select Days for Registration</h2>
+            <div id="days-row">
+              {daysList ? (
+                daysList.map((val) => (
+                  <DayButton
+                    key={val}
+                    name={val}
+                    selected={this.state[`${val.toLowerCase()}Registered`]}
+                    onClick={(evt) =>
+                      this.changeBinary(
+                        evt,
+                        val,
+                        this.state[`${val.toLowerCase()}Registered`]
+                      )
+                    }
+                  >
+                    <h3>{val}</h3>
+                  </DayButton>
+                ))
+              ) : (
+                <h8>Loading...</h8>
+              )}
+            </div>
+            <input type="submit" value="Register" />
+          </form>
+        </StudentWrapper>
       </div>
     )
   }
