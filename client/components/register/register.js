@@ -7,17 +7,19 @@ import {
   daysList,
   primaryColor,
   secondaryColor,
+  InfoInput,
 } from '../../constants'
 
 const DayButton = styled.button`
   // font-weight: ${(props) => (props.selected ? 'bold' : 'normal')};
   background: ${(props) => (props.selected ? primaryColor : 'white')};
   color: ${(props) => (props.selected ? 'white' : 'black')};
+  border: ${(props) =>
+    props.selected ? `5px ${secondaryColor} solid` : '2px black solid'};
   font-size: x-large;
   font-weight: normal;
   height: 160px;
   width: 160px;
-  border: 2px black solid;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,31 +62,43 @@ class Register extends Component {
       <div>
         <h2>Register Your Student</h2>
         <ParentInfo />
+        <h2 style={{textAlign: 'center'}}>Student Information</h2>
         <form onSubmit={this.handleSubmit}>
-          <input
-            name="studentFirst"
-            placeholder="Student First Name"
-            onChange={this.handleTextboxChange}
-          />
-          <input
-            name="studentLast"
-            placeholder="Student Last Name"
-            onChange={this.handleTextboxChange}
-          />
-          <select name="schoolName" onChange={this.handleTextboxChange}>
-            {schoolList.map((option, i) => (
-              <option key={i} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-          <select name="grade" onChange={this.handleTextboxChange}>
-            {gradesList.map((option, i) => (
-              <option key={i} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
+          <div style={{display: 'flex', justifyContent: 'space-around'}}>
+            <InfoInput
+              name="studentFirst"
+              placeholder="Student First Name"
+              onChange={this.handleTextboxChange}
+            />
+            <InfoInput
+              name="studentLast"
+              placeholder="Student Last Name"
+              onChange={this.handleTextboxChange}
+            />
+            <select
+              name="schoolName"
+              style={{fontSize: 'large', height: '30px', margin: '10px'}}
+              onChange={this.handleTextboxChange}
+            >
+              {schoolList.map((option, i) => (
+                <option key={i} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+            <select
+              name="grade"
+              style={{fontSize: 'large', height: '30px', margin: '10px'}}
+              onChange={this.handleTextboxChange}
+            >
+              {gradesList.map((option, i) => (
+                <option key={i} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+          <h2 style={{textAlign: 'center'}}>Select Days for Registration</h2>
           <div id="days-row">
             {daysList ? (
               daysList.map((val) => (
