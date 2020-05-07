@@ -9,7 +9,6 @@ const db = new Sequelize(
   'postgres',
   {
     dialect: 'postgres',
-    host: 'database',
     logging: false
   }
 )
