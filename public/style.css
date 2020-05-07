@@ -26,14 +26,5 @@ button:focus {
 
 #days-row {
   display: flex;
-}
-
-.day-box {
-  height: 150px;
-  width: 150px;
-  border: 2px black solid;
-  /* text-align: center; */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 }

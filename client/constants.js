@@ -1,8 +1,11 @@
+export const primaryColor = 'rgb(90, 165, 241)'
+export const secondaryColor = 'rgb(240, 89, 210)'
+
 export const schoolList = [
   'West Elementary',
   'East Elementary',
   'North Elementary',
-  'South Elementary'
+  'South Elementary',
 ]
 
 export const gradesList = [
@@ -13,7 +16,7 @@ export const gradesList = [
   'Third',
   'Fourth',
   'Fifth',
-  'Sixth'
+  'Sixth',
 ]
 
 export const daysList = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
@@ -69,5 +72,5 @@ export const stateList = [
   'WA',
   'WV',
   'WI',
-  'WY'
+  'WY',
 ]
