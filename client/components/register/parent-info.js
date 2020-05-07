@@ -7,15 +7,18 @@ import {
   secondaryColor,
 } from '../../constants'
 
-const Parent = styled.div`
-  background: ${secondaryColor};
-  width: 100%;
+const ParentWrapper = styled.div`
+  width: 90%;
+  background: rgb(225, 215, 223);
   margin: 10px;
   padding: 5px;
+  display: inline-block;
 `
 const InfoRow = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
+  margin-top: 8px;
+  margin-bottom: 8px;
 `
 
 class ParentInfo extends Component {
@@ -48,49 +51,54 @@ class ParentInfo extends Component {
 
   render() {
     return (
-      <div>
-        <h2 style={{textAlign: 'center'}}>Parent Information</h2>
-        <Parent>
+      <div style={{textAlign: 'center'}}>
+        <h2>Parent Information</h2>
+        <ParentWrapper>
           <form onSubmit={this.handleSubmit}>
             <InfoRow>
+              <p style={{width: '120px'}}>Full Name</p>
               <InfoInput
                 name="parentFirst"
                 placeholder="Parent First Name"
-                style={{width: '300px'}}
                 onChange={this.handleTextboxChange}
               />
               <InfoInput
                 name="parentLast"
                 placeholder="Parent Last Name"
-                style={{width: '300px'}}
                 onChange={this.handleTextboxChange}
               />
+            </InfoRow>
+            <InfoRow>
+              <p style={{width: '120px'}}>Contact Info</p>
               <InfoInput
                 name="parentCell"
                 placeholder="Cell Phone"
-                style={{width: '150px'}}
+                style={{width: '180px'}}
                 onChange={this.handleTextboxChange}
               />
               <InfoInput
                 name="parentWork"
                 placeholder="Work Phone"
-                style={{width: '150px'}}
+                style={{width: '180px'}}
+                onChange={this.handleTextboxChange}
+              />
+              <InfoInput
+                name="parentEmail"
+                placeholder="Email Address"
                 onChange={this.handleTextboxChange}
               />
             </InfoRow>
             <InfoRow>
-              <InfoInput
-                name="parentEmail"
-                placeholder="Email Address"
-                style={{width: '300px'}}
-                onChange={this.handleTextboxChange}
-              />
+              <p style={{width: '120px'}}>Address</p>
               <InfoInput
                 name="parentAddress"
-                placeholder="Home Address"
-                style={{width: '400px'}}
+                placeholder="Street Address"
+                style={{width: '500px'}}
                 onChange={this.handleTextboxChange}
               />
+            </InfoRow>
+            <InfoRow style={{alignItems: 'center'}}>
+              <p style={{width: '120px'}}></p>
               <InfoInput
                 name="parentCity"
                 placeholder="City"
@@ -99,7 +107,7 @@ class ParentInfo extends Component {
               <select
                 name="parentState"
                 onChange={this.handleTextboxChange}
-                style={{fontSize: 'large'}}
+                style={{fontSize: 'large', height: '30px'}}
               >
                 {stateList.map((st, i) => {
                   return (
@@ -116,49 +124,44 @@ class ParentInfo extends Component {
                 onChange={this.handleTextboxChange}
               />
             </InfoRow>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                margin: '0em 1em',
-              }}
-            >
-              <div>
-                <h2>Emergency Contacts</h2>
+            <div style={{display: 'flex', alignItems: 'center'}}>
+              <div style={{margin: '0px'}}>
+                <p style={{marginBottom: '8px', width: '120px'}}>Emergency</p>
+                <p style={{marginTop: '8px'}}>Contacts</p>
               </div>
-              <div style={{margin: '0em 1em'}}>
-                <InfoRow style={{justifyContent: 'center'}}>
+              <div style={{margin: '0px'}}>
+                <InfoRow style={{margin: '0px'}}>
                   <InfoInput
                     name="eContactName1"
                     placeholder="Primary Contact"
                     onChange={this.handleTextboxChange}
-                    style={{width: '400px'}}
+                    style={{width: '400px', marginRight: '50px'}}
                   />
                   <InfoInput
                     name="eContactPhone1"
                     placeholder="Phone Number"
-                    style={{width: '150px'}}
+                    style={{width: '180px'}}
                     onChange={this.handleTextboxChange}
                   />
                 </InfoRow>
-                <InfoRow style={{justifyContent: 'center'}}>
+                <InfoRow style={{margin: '0px'}}>
                   <InfoInput
                     name="eContactName2"
                     placeholder="Secondary Contact"
-                    style={{width: '400px'}}
+                    style={{width: '400px', marginRight: '50px'}}
                     onChange={this.handleTextboxChange}
                   />
                   <InfoInput
                     name="eContactPhone2"
                     placeholder="Phone Number"
-                    style={{width: '150px'}}
+                    style={{width: '180px'}}
                     onChange={this.handleTextboxChange}
                   />
                 </InfoRow>
               </div>
             </div>
           </form>
-        </Parent>
+        </ParentWrapper>
       </div>
     )
   }

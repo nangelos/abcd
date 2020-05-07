@@ -79,5 +79,6 @@ export const stateList = [
 export const InfoInput = styled.input`
   margin: 10px;
   font-size: large;
-  text-align: center;
+  width: 300px;
+  padding: 0px 0px 0px 5px;
 `
