@@ -2,4 +2,5 @@ FROM node:latest
 
 WORKDIR /code
 
-CMD yarn start-dev
+ENV NODE_ENV='development'
+CMD yarn start
