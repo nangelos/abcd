@@ -1,3 +1,5 @@
+import styled from 'styled-components'
+
 export const primaryColor = 'rgb(90, 165, 241)'
 export const secondaryColor = 'rgb(240, 89, 210)'
 
@@ -74,3 +76,8 @@ export const stateList = [
   'WI',
   'WY',
 ]
+export const InfoInput = styled.input`
+  margin: 10px;
+  font-size: large;
+  text-align: center;
+`
