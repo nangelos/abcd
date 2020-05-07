@@ -1,14 +1,22 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {Day} from './day'
 import ParentInfo from './parent-info'
-import {schoolList, gradesList, daysList} from '../../constants'
+import {
+  schoolList,
+  gradesList,
+  daysList,
+  primaryColor,
+  secondaryColor,
+} from '../../constants'
 
 const DayButton = styled.button`
-  // font-weight: ${props => (props.selected ? 'bold' : 'normal')};
-  // background: ${props => (props.selected ? 'purple' : 'white')};
-  height: 150px;
-  width: 150px;
+  // font-weight: ${(props) => (props.selected ? 'bold' : 'normal')};
+  background: ${(props) => (props.selected ? primaryColor : 'white')};
+  color: ${(props) => (props.selected ? 'white' : 'black')};
+  font-size: x-large;
+  font-weight: normal;
+  height: 160px;
+  width: 160px;
   border: 2px black solid;
   display: flex;
   align-items: center;
@@ -26,33 +34,23 @@ class Register extends Component {
     tuesdayRegistered: false,
     wednesdayRegistered: false,
     thursdayRegistered: false,
-    fridayRegistered: false
+    fridayRegistered: false,
   }
 
-  handleTextboxChange = evt => {
+  handleTextboxChange = (evt) => {
     let {name, value} = evt.target
     this.setState({[name]: value.toUpperCase()})
     console.log(this.state)
   }
 
-  changeBinary = evt => {
+  changeBinary = (evt, name, value) => {
     evt.preventDefault()
-    let {name, value} = evt.target
-    console.log('first take, Name: ', name, ' value: ', value)
-    if (value === 'false') {
-      value = false
-    } else {
-      value = true
-    }
-    console.log('name: ', name, 'value: ', value)
     let newName = `${name.toLowerCase()}Registered`
-    let newValue = !value
-    console.log('name: ', name, 'newValue', newValue)
-    // this.setState({[newName]: newValue})
-    // console.log(this.state)
+    let newValue = !JSON.parse(value)
+    this.setState({[newName]: newValue})
   }
 
-  handleSubmit = evt => {
+  handleSubmit = (evt) => {
     evt.preventDefault()
     console.log(evt)
   }
@@ -89,14 +87,18 @@ class Register extends Component {
           </select>
           <div id="days-row">
             {daysList ? (
-              daysList.map(val => (
-                // <div className="day-box" key={val} value={val}>
+              daysList.map((val) => (
                 <DayButton
                   key={val}
                   name={val}
-                  value={this.state[`${val.toLowerCase()}Registered`]}
-                  // selected={this.props.selected}
-                  onClick={this.changeBinary}
+                  selected={this.state[`${val.toLowerCase()}Registered`]}
+                  onClick={(evt) =>
+                    this.changeBinary(
+                      evt,
+                      val,
+                      this.state[`${val.toLowerCase()}Registered`]
+                    )
+                  }
                 >
                   <h3>{val}</h3>
                 </DayButton>
