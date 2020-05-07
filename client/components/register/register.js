@@ -35,18 +35,9 @@ class Register extends Component {
     console.log(this.state)
   }
 
-  changeBinary = evt => {
-    evt.preventDefault()
-    let {name, value} = evt.target
-    console.log('first take, Name: ', name, ' value: ', value)
-    if (value === 'false') {
-      value = false
-    } else {
-      value = true
-    }
-    console.log('name: ', name, 'value: ', value)
+  changeBinary = (name, value) => {
     let newName = `${name.toLowerCase()}Registered`
-    let newValue = !value
+    let newValue = !JSON.parse(value)
     console.log('name: ', name, 'newValue', newValue)
     // this.setState({[newName]: newValue})
     // console.log(this.state)
@@ -94,9 +85,13 @@ class Register extends Component {
                 <DayButton
                   key={val}
                   name={val}
-                  value={this.state[`${val.toLowerCase()}Registered`]}
                   // selected={this.props.selected}
-                  onClick={this.changeBinary}
+                  onClick={() =>
+                    this.changeBinary(
+                      val,
+                      this.state[`${val.toLowerCase()}Registered`]
+                    )
+                  }
                 >
                   <h3>{val}</h3>
                 </DayButton>
