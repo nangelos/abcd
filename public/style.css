@@ -20,6 +20,10 @@ form div {
   display: inline-block;
 }
 
+button:focus {
+  outline: none;
+}
+
 #days-row {
   display: flex;
 }
