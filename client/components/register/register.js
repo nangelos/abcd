@@ -20,8 +20,8 @@ const DayButton = styled.button`
     props.selected ? `5px black solid` : '2px black solid'};
   font-size: x-large;
   font-weight: normal;
-  height: 160px;
-  width: 160px;
+  height: 155px;
+  width: 155px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -71,7 +71,7 @@ class Register extends Component {
   render() {
     return (
       <div style={{textAlign: 'center'}}>
-        <h2>Register Your Student</h2>
+        <h2 style={{textAlign: 'left'}}>Register Your Student</h2>
         <ParentInfo />
         <h2 style={{textAlign: 'center'}}>Student Information</h2>
         <StudentWrapper>
@@ -127,13 +127,13 @@ class Register extends Component {
                 placeholder={infoString}
                 style={{
                   width: '400px',
-                  height: '250px',
+                  height: '150px',
                   margin: '5px',
                   fontSize: 'medium',
                 }}
               ></textarea>
             </InfoRow>
-            <h2 style={{textAlign: 'center'}}>Select Days for Registration</h2>
+            <h3 style={{textAlign: 'center'}}>Select Days for Registration</h3>
             <div id="days-row">
               {daysList ? (
                 daysList.map((val) => (
@@ -156,9 +156,16 @@ class Register extends Component {
                 <h8>Loading...</h8>
               )}
             </div>
-            <input type="submit" value="Register" />
           </form>
         </StudentWrapper>
+        <br></br>
+        <input
+          type="submit"
+          value="Register"
+          id="submitButton"
+          style={{background: primaryColor}}
+          onClick={this.handleSubmit}
+        />
       </div>
     )
   }
