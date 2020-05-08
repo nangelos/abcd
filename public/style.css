@@ -28,3 +28,13 @@ button:focus {
   display: flex;
   justify-content: space-evenly;
 }
+
+#submitButton {
+  font-size: large;
+  width: 120px;
+  color: white;
+  border-radius: 5px;
+  line-height: 1.5;
+  cursor: pointer;
+  font-weight: bold;
+}
