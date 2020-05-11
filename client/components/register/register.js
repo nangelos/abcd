@@ -54,9 +54,10 @@ class Register extends Component {
     console.log('remove:', this.state)
   }
 
-  handleSubmit = (evt) => {
-    evt.preventDefault()
-    console.log(evt)
+  handleSubmit = (arr) => {
+    // evt.preventDefault()
+    // console.log(evt)
+    console.log(arr)
   }
 
   render() {
@@ -66,6 +67,7 @@ class Register extends Component {
       : {visibility: 'hidden', paddingLeft: '10px'}
     const children = []
     for (var i = 0; i < numChildren; i++) {
+      // children.push(<StudentInfo key={i} />)
       children.push(i)
     }
     return (
@@ -103,7 +105,7 @@ class Register extends Component {
           value="Register"
           id="submitButton"
           style={{background: primaryColor}}
-          onClick={this.handleSubmit}
+          onClick={() => this.handleSubmit(children)}
         />
       </div>
     )
