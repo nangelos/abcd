@@ -26,14 +26,15 @@ button:focus {
 
 #days-row {
   display: flex;
+  justify-content: space-evenly;
 }
 
-.day-box {
-  height: 150px;
-  width: 150px;
-  border: 2px black solid;
-  /* text-align: center; */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+#submitButton {
+  font-size: large;
+  width: 120px;
+  color: white;
+  border-radius: 5px;
+  line-height: 1.5;
+  cursor: pointer;
+  font-weight: bold;
 }
