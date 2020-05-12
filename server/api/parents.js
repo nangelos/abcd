@@ -24,11 +24,12 @@ router.post('/', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   try {
+    const {body} = req
     console.log('put function: still needs work: ', req.params)
+    console.log('here is the req.body: ', body)
     const {id} = req.params
-    const data = await ParentInfo.udpate({
-      where: {id},
-    })
+    const {parentFirst} = body
+    const data = await ParentInfo.update({...body}, {where: {id: id}})
     res.json(data)
   } catch (err) {
     next(err)
