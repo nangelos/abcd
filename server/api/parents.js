@@ -15,7 +15,7 @@ router.post('/', async (req, res, next) => {
   try {
     console.log('post req.body: ', req.body)
     let {body} = req
-    const info = await ParentInfo.create({body})
+    const info = await ParentInfo.create({...body})
     res.status(201).json(info)
   } catch (err) {
     next(err)
