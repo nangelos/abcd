@@ -45,22 +45,18 @@ class Register extends Component {
 
   addStudent = (evt) => {
     evt.preventDefault()
-    this.setState({numChildren: this.state.numChildren + 1})
-    console.log(this.state)
-    console.log('Add another student component')
+    this.setState((prevState) => ({numChildren: prevState.numChildren + 1}))
   }
 
   removeStudent = (evt) => {
     evt.preventDefault()
-    this.setState({numChildren: this.state.numChildren - 1})
-    console.log('remove:', this.state)
+    this.setState((prevState) => ({numChildren: prevState.numChildren - 1}))
   }
 
   handleSubmit = (arr) => {
     // evt.preventDefault()
     // console.log(evt)
     console.log(arr)
-    console.log(addParentInfo)
     addParentInfo(arr)
   }
 
@@ -116,10 +112,10 @@ class Register extends Component {
   }
 }
 
-const mapState = (state) => ({state})
-const mapDispatch = (dispatch) => ({
-  createParentInfo: (data) => dispatch(addParentInfo(data)),
-})
+// const mapState = (state) => ({state})
+// const mapDispatch = (dispatch) => ({
+//   createParentInfo: (data) => dispatch(addParentInfo(data)),
+// })
 
 // export default connect(mapState, mapDispatch)(Register)
 export default Register
