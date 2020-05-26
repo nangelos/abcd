@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import styled from 'styled-components'
 import ParentInfo from './parent-info'
 import {
@@ -12,6 +13,7 @@ import {
   infoString,
 } from '../../constants'
 import StudentInfo from './student-info'
+import {addParentInfo} from '../../store'
 
 const AddButton = styled.input`
   background: black;
@@ -58,6 +60,8 @@ class Register extends Component {
     // evt.preventDefault()
     // console.log(evt)
     console.log(arr)
+    console.log(addParentInfo)
+    addParentInfo(arr)
   }
 
   render() {
@@ -73,7 +77,7 @@ class Register extends Component {
     return (
       <div style={{textAlign: 'center'}}>
         <h2 style={{textAlign: 'left'}}>Register Your Student</h2>
-        <ParentInfo />
+        <ParentInfo handleSubmit={this.handleSubmit} />
         {children.map((i) => (
           <StudentInfo key={i} />
         ))}
@@ -112,4 +116,10 @@ class Register extends Component {
   }
 }
 
+const mapState = (state) => ({state})
+const mapDispatch = (dispatch) => ({
+  createParentInfo: (data) => dispatch(addParentInfo(data)),
+})
+
+// export default connect(mapState, mapDispatch)(Register)
 export default Register
