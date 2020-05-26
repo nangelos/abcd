@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import styled from 'styled-components'
 import {
   stateList,
@@ -7,6 +8,7 @@ import {
   secondaryColor,
   InfoRow,
 } from '../../constants'
+import {addParentInfo} from '../../store'
 
 const ParentWrapper = styled.div`
   width: 90%;
@@ -36,12 +38,12 @@ class ParentInfo extends Component {
   handleTextboxChange = (evt) => {
     let {name, value} = evt.target
     this.setState({[name]: value})
-    console.log(this.state)
   }
 
   handleSubmit = (evt) => {
     evt.preventDefault()
-    console.log(evt)
+    const {createParentInfo} = this.props
+    createParentInfo(this.state)
   }
 
   render() {
@@ -55,11 +57,13 @@ class ParentInfo extends Component {
               <InfoInput
                 name="parentFirst"
                 placeholder="Parent First Name"
+                required
                 onChange={this.handleTextboxChange}
               />
               <InfoInput
                 name="parentLast"
                 placeholder="Parent Last Name"
+                required
                 onChange={this.handleTextboxChange}
               />
             </InfoRow>
@@ -69,6 +73,7 @@ class ParentInfo extends Component {
                 name="parentCell"
                 placeholder="Cell Phone"
                 style={{width: '180px'}}
+                required
                 onChange={this.handleTextboxChange}
               />
               <InfoInput
@@ -80,6 +85,7 @@ class ParentInfo extends Component {
               <InfoInput
                 name="parentEmail"
                 placeholder="Email Address"
+                required
                 onChange={this.handleTextboxChange}
               />
             </InfoRow>
@@ -89,6 +95,7 @@ class ParentInfo extends Component {
                 name="parentAddress"
                 placeholder="Street Address"
                 style={{width: '500px'}}
+                required
                 onChange={this.handleTextboxChange}
               />
             </InfoRow>
@@ -97,6 +104,7 @@ class ParentInfo extends Component {
               <InfoInput
                 name="parentCity"
                 placeholder="City"
+                required
                 onChange={this.handleTextboxChange}
               />
               <select
@@ -116,6 +124,7 @@ class ParentInfo extends Component {
                 name="parentZip"
                 placeholder="Zip Code"
                 style={{width: '90px'}}
+                required
                 onChange={this.handleTextboxChange}
               />
             </InfoRow>
@@ -130,12 +139,14 @@ class ParentInfo extends Component {
                     name="eContactName1"
                     placeholder="Primary Contact"
                     onChange={this.handleTextboxChange}
+                    required
                     style={{width: '400px', marginRight: '50px'}}
                   />
                   <InfoInput
                     name="eContactPhone1"
                     placeholder="Phone Number"
                     style={{width: '180px'}}
+                    required
                     onChange={this.handleTextboxChange}
                   />
                 </InfoRow>
@@ -155,6 +166,7 @@ class ParentInfo extends Component {
                 </InfoRow>
               </div>
             </div>
+            <input type="submit" value="Submit" />
           </form>
         </ParentWrapper>
       </div>
@@ -162,4 +174,9 @@ class ParentInfo extends Component {
   }
 }
 
-export default ParentInfo
+const mapState = (state) => ({state})
+const mapDispatch = (dispatch) => ({
+  createParentInfo: (data) => dispatch(addParentInfo(data)),
+})
+
+export default connect(mapState, mapDispatch)(ParentInfo)
