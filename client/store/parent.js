@@ -41,7 +41,6 @@ export const addParentInfo = (info) => async (dispatch) => {
     return dispatch(createParentInfo({error: err}))
   }
   try {
-    console.log('res from create: ', res.data)
     dispatch(getParentInfo(res.data))
     // history.push('/schedule')
   } catch (dispatchOrHistoryErr) {
