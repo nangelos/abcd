@@ -53,11 +53,12 @@ class Register extends Component {
     this.setState((prevState) => ({numChildren: prevState.numChildren - 1}))
   }
 
-  handleSubmit = (arr) => {
-    // evt.preventDefault()
+  handleSubmit = (evt) => {
+    evt.preventDefault()
+    console.log('Hello world')
     // console.log(evt)
-    console.log(arr)
-    addParentInfo(arr)
+    // addParentInfo(arr)
+    // console.log(arr)
   }
 
   render() {
@@ -73,7 +74,7 @@ class Register extends Component {
     return (
       <div style={{textAlign: 'center'}}>
         <h2 style={{textAlign: 'left'}}>Register Your Student</h2>
-        <ParentInfo handleSubmit={this.handleSubmit} />
+        <ParentInfo />
         {children.map((i) => (
           <StudentInfo key={i} />
         ))}
@@ -105,7 +106,7 @@ class Register extends Component {
           value="Register"
           id="submitButton"
           style={{background: primaryColor}}
-          onClick={() => this.handleSubmit(children)}
+          onClick={this.handleSubmit}
         />
       </div>
     )
