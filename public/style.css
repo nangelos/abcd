@@ -1,9 +1,15 @@
 body {
-  font-family: sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 a {
   text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 label {
@@ -12,7 +18,7 @@ label {
 
 nav a {
   display: inline-block;
-  margin: 1em;
+  margin: 0.5em 1em;
 }
 
 form div {

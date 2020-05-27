@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const primaryColor = 'rgb(90, 165, 241)'
-export const secondaryColor = 'rgb(225, 215, 223)'
+export const secondaryColor = 'rgb(231, 231, 231)'
 
 export const schoolList = [
   'West Elementary',
@@ -39,6 +39,7 @@ export const InfoInput = styled.input`
   margin: 10px;
   font-size: large;
   width: 300px;
+  height: 30px;
   padding: 0px 0px 0px 5px;
 `
 export const InfoRow = styled.div`
