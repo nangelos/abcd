@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {connect} from 'react-redux'
+import socket from '../../socket'
 import styled from 'styled-components'
 import ParentInfo from './parent-info'
 import {
@@ -13,7 +13,6 @@ import {
   infoString,
 } from '../../constants'
 import StudentInfo from './student-info'
-import {addParentInfo} from '../../store'
 
 const AddButton = styled.input`
   background: black;
@@ -55,10 +54,10 @@ class Register extends Component {
 
   handleSubmit = (evt) => {
     evt.preventDefault()
-    console.log('Hello world')
-    // console.log(evt)
-    // addParentInfo(arr)
-    // console.log(arr)
+    socket.emit('submitClick', (data) => {
+      console.log('submit was clicked')
+      console.log(data)
+    })
   }
 
   render() {
@@ -113,10 +112,4 @@ class Register extends Component {
   }
 }
 
-// const mapState = (state) => ({state})
-// const mapDispatch = (dispatch) => ({
-//   createParentInfo: (data) => dispatch(addParentInfo(data)),
-// })
-
-// export default connect(mapState, mapDispatch)(Register)
 export default Register

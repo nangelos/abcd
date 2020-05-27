@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import socket from '../../socket'
 import styled from 'styled-components'
 import {
   stateList,
@@ -40,10 +41,15 @@ class ParentInfo extends Component {
     this.setState({[name]: value})
   }
 
-  handleSubmit = (evt) => {
-    evt.preventDefault()
+  handleSubmit = () => {
     const {createParentInfo} = this.props
     createParentInfo(this.state)
+  }
+
+  componentDidMount() {
+    socket.on('submitClick', () => {
+      this.handleSubmit()
+    })
   }
 
   render() {
@@ -166,7 +172,6 @@ class ParentInfo extends Component {
                 </InfoRow>
               </div>
             </div>
-            <input type="submit" value="Submit" />
           </form>
         </ParentWrapper>
       </div>
