@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 import {changeParentInfo, changeStudentInfo} from '../../store'
 import {secondaryColor, primaryColor} from '../../constants'
-import ParentInfo from '../register/parent-info'
+import ParentUpdate from './parent-update'
 import StudentInfo from '../register/student-info'
 
 const SettingsWrapper = styled.div`
@@ -51,7 +51,6 @@ class Settings extends Component {
   }
 
   render() {
-    console.log(ParentInfo)
     const {active} = this.state
     return (
       <div style={{textAlign: 'center'}}>
@@ -81,7 +80,7 @@ class Settings extends Component {
           </Sidebar>
           <SettingsWrapper>
             {active === 'ParentInfo' ? (
-              <ParentInfo />
+              <ParentUpdate />
             ) : active === 'StudentInfo' ? (
               <StudentInfo />
             ) : (
