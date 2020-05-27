@@ -5,7 +5,7 @@ import history from '../history'
  * ACTION TYPES
  */
 const GET_PARENT_INFO = 'GET_PARENT_INFO'
-const CREATE_PARENT_INFO = 'CREATE_PARENT_INFO'
+const CREATE_INFO = 'CREATE_INFO'
 const UPDATE_PARENT_INFO = 'UPDATE_PARENT_INFO'
 
 /**
@@ -17,7 +17,7 @@ const defaultParent = {}
  * ACTION CREATORS
  */
 const getParentInfo = (parent) => ({type: GET_PARENT_INFO, parent})
-const createParentInfo = (parent) => ({type: CREATE_PARENT_INFO, parent})
+const createParentInfo = (parent) => ({type: CREATE_INFO, parent})
 const updateParentInfo = (parent) => ({type: UPDATE_PARENT_INFO, parent})
 
 /**
@@ -71,7 +71,7 @@ export default function (state = defaultParent, action) {
   switch (action.type) {
     case GET_PARENT_INFO:
       return action.parent
-    case CREATE_PARENT_INFO:
+    case CREATE_INFO:
       return action.parent
     case UPDATE_PARENT_INFO:
       return action.parent
