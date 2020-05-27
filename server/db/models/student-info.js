@@ -36,18 +36,23 @@ const StudentInfo = db.define('student-info', {
   },
   mondayRegistered: {
     type: Sequelize.BOOLEAN,
+    defaultValue: false,
   },
   tuesdayRegistered: {
     type: Sequelize.BOOLEAN,
+    defaultValue: false,
   },
   wednesdayRegistered: {
     type: Sequelize.BOOLEAN,
+    defaultValue: false,
   },
   thursdayRegistered: {
     type: Sequelize.BOOLEAN,
+    defaultValue: false,
   },
   fridayRegistered: {
     type: Sequelize.BOOLEAN,
+    defaultValue: false,
   },
   additionalInfo: {
     type: Sequelize.STRING(500),

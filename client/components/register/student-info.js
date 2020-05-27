@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import styled from 'styled-components'
 import {
   schoolList,
@@ -10,6 +11,7 @@ import {
   InfoRow,
   infoString,
 } from '../../constants'
+import {addStudentInfo} from '../../store'
 
 const DayButton = styled.button`
   // font-weight: ${(props) => (props.selected ? 'bold' : 'normal')};
@@ -53,7 +55,6 @@ class StudentInfo extends Component {
   handleTextboxChange = (evt) => {
     let {name, value} = evt.target
     this.setState({[name]: value})
-    console.log(this.state)
   }
 
   changeBinary = (evt, name, value) => {
@@ -65,7 +66,8 @@ class StudentInfo extends Component {
 
   handleSubmit = (evt) => {
     evt.preventDefault()
-    console.log(evt)
+    const {createStudentInfo} = this.props
+    createStudentInfo(this.state)
   }
 
   render() {
@@ -154,6 +156,7 @@ class StudentInfo extends Component {
                 <h8>Loading...</h8>
               )}
             </div>
+            <input type="submit" value="Submit" />
           </form>
         </StudentWrapper>
       </div>
@@ -161,4 +164,9 @@ class StudentInfo extends Component {
   }
 }
 
-export default StudentInfo
+const mapState = (state) => ({state})
+const mapDispatch = (dispatch) => ({
+  createStudentInfo: (data) => dispatch(addStudentInfo(data)),
+})
+// export default StudentInfo
+export default connect(mapState, mapDispatch)(StudentInfo)
