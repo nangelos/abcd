@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import socket from '../../socket'
 import styled from 'styled-components'
 import {
   stateList,
@@ -41,23 +40,29 @@ class ParentUpdate extends Component {
     this.setState({[name]: value})
   }
 
-  handleSubmit = () => {
-    console.log(this.props)
-    const {updateParentInfo} = this.props
-    const filtered = this.state.filter((val) => val !== null)
-    // STILL NEED TO PUT EVENT EMITTER IN SETTINGS.JS && CREATE SUBMIT BUTTON
+  handleSubmit = (evt) => {
+    evt.preventDefault()
+    const {updateParentInfo, userId} = this.props
+    const list = this.state
+    const filtered = Object.keys(list)
+      .filter((key) => list[key] !== null)
+      .reduce((obj, key) => {
+        return {
+          ...obj,
+          [key]: list[key],
+        }
+      }, {})
     console.log('filtered state: ', filtered)
-    // updateParentInfo(1, this.state)
+    updateParentInfo(userId, filtered)
   }
 
   componentDidMount() {
-    socket.on('submitClick', () => {
-      this.handleSubmit()
-    })
     // NEED TO FETCH PARENT INFO, INLCUDING PASSING DOWN userId
   }
 
   render() {
+    const props = this.props
+    console.log(props)
     return (
       <div style={{textAlign: 'center'}}>
         <h2>Parent Information</h2>
@@ -68,13 +73,11 @@ class ParentUpdate extends Component {
               <InfoInput
                 name="parentFirst"
                 placeholder="Parent First Name"
-                required
                 onChange={this.handleTextboxChange}
               />
               <InfoInput
                 name="parentLast"
                 placeholder="Parent Last Name"
-                required
                 onChange={this.handleTextboxChange}
               />
             </InfoRow>
@@ -84,7 +87,6 @@ class ParentUpdate extends Component {
                 name="parentCell"
                 placeholder="Cell Phone"
                 style={{width: '180px'}}
-                required
                 onChange={this.handleTextboxChange}
               />
               <InfoInput
@@ -96,7 +98,6 @@ class ParentUpdate extends Component {
               <InfoInput
                 name="parentEmail"
                 placeholder="Email Address"
-                required
                 onChange={this.handleTextboxChange}
               />
             </InfoRow>
@@ -106,7 +107,6 @@ class ParentUpdate extends Component {
                 name="parentAddress"
                 placeholder="Street Address"
                 style={{width: '500px'}}
-                required
                 onChange={this.handleTextboxChange}
               />
             </InfoRow>
@@ -115,7 +115,6 @@ class ParentUpdate extends Component {
               <InfoInput
                 name="parentCity"
                 placeholder="City"
-                required
                 onChange={this.handleTextboxChange}
               />
               <select
@@ -135,7 +134,6 @@ class ParentUpdate extends Component {
                 name="parentZip"
                 placeholder="Zip Code"
                 style={{width: '90px'}}
-                required
                 onChange={this.handleTextboxChange}
               />
             </InfoRow>
@@ -150,14 +148,12 @@ class ParentUpdate extends Component {
                     name="eContactName1"
                     placeholder="Primary Contact"
                     onChange={this.handleTextboxChange}
-                    required
                     style={{width: '400px', marginRight: '50px'}}
                   />
                   <InfoInput
                     name="eContactPhone1"
                     placeholder="Phone Number"
                     style={{width: '180px'}}
-                    required
                     onChange={this.handleTextboxChange}
                   />
                 </InfoRow>
@@ -177,6 +173,12 @@ class ParentUpdate extends Component {
                 </InfoRow>
               </div>
             </div>
+            <input
+              type="submit"
+              value="Update"
+              id="submitButton"
+              style={{background: primaryColor}}
+            />
           </form>
         </ParentWrapper>
       </div>

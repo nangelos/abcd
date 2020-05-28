@@ -45,7 +45,6 @@ class Settings extends Component {
 
   changeActive = (evt) => {
     evt.preventDefault()
-    console.log(evt.target.value)
     const {value} = evt.target
     this.setState({active: value})
   }
@@ -80,9 +79,9 @@ class Settings extends Component {
           </Sidebar>
           <SettingsWrapper>
             {active === 'ParentInfo' ? (
-              <ParentUpdate />
+              <ParentUpdate userId={this.userId} />
             ) : active === 'StudentInfo' ? (
-              <StudentInfo />
+              <StudentInfo userId={this.userId} />
             ) : (
               <h1>Payment Info</h1>
             )}
