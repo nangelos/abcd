@@ -49,7 +49,6 @@ export const addParentInfo = (info) => async (dispatch) => {
 }
 
 export const changeParentInfo = (id, info) => async (dispatch) => {
-  console.log('changeParentInfo: ', info)
   let res
   try {
     res = await axios.put(`api/parents/${id}`, info)
@@ -58,7 +57,6 @@ export const changeParentInfo = (id, info) => async (dispatch) => {
   }
   try {
     dispatch(updateParentInfo(res.data))
-    history.push('api/schedule')
   } catch (err) {
     console.error(err)
   }
