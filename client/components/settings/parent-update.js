@@ -148,7 +148,7 @@ class ParentUpdate extends Component {
                 <select
                   name="parentState"
                   onChange={this.handleTextboxChange}
-                  value={parent.parentState}
+                  defaultValue={parent.parentState}
                   style={{fontSize: 'large', height: '30px'}}
                 >
                   {stateList.map((st, i) => {
