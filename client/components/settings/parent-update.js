@@ -31,7 +31,7 @@ class ParentUpdate extends Component {
     parentZip: null,
     eContactName1: null,
     eContactPhone1: null,
-    eConcactName2: null,
+    eContactName2: null,
     eContactPhone2: null,
   }
 
@@ -40,15 +40,37 @@ class ParentUpdate extends Component {
     this.setState({[name]: value})
   }
 
+  formatPhoneNbrs = (obj) => {
+    const nums = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    const phones = [
+      'parentCell',
+      'parentWork',
+      'eContactPhone1',
+      'eContactPhone2',
+    ]
+    Object.keys(obj).forEach((key) => {
+      if (phones.includes(key) && obj[key] !== null) {
+        let raw = obj[key]
+        raw = raw.split('').filter((n) => nums.includes(n))
+        raw.splice(6, 0, '-')
+        raw.splice(3, 0, '-')
+        let final = raw.join('')
+        obj[key] = final
+      }
+    })
+    return obj
+  }
+
   handleSubmit = () => {
     const {updateParentInfo, userId} = this.props
     const list = this.state
-    const filtered = Object.keys(list)
-      .filter((key) => list[key] !== null)
+    const formatted = this.formatPhoneNbrs(list)
+    const filtered = Object.keys(formatted)
+      .filter((key) => formatted[key] !== null)
       .reduce((obj, key) => {
         return {
           ...obj,
-          [key]: list[key],
+          [key]: formatted[key],
         }
       }, {})
     updateParentInfo(userId, filtered)
@@ -178,8 +200,8 @@ class ParentUpdate extends Component {
                     <InfoInput
                       name="eContactPhone2"
                       placeholder={
-                        parent.eConcactPhone2
-                          ? parent.eConcactPhone2
+                        parent.eContactPhone2
+                          ? parent.eContactPhone2
                           : 'Phone Number'
                       }
                       style={{width: '180px'}}
