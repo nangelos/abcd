@@ -24,7 +24,7 @@ class ParentInfo extends Component {
     parentFirst: '',
     parentLast: '',
     parentCell: '',
-    parentWork: '',
+    parentWork: null,
     parentEmail: '',
     parentAddress: '',
     parentCity: '',
@@ -32,8 +32,8 @@ class ParentInfo extends Component {
     parentZip: '',
     eContactName1: '',
     eContactPhone1: '',
-    eContactName2: '',
-    eContactPhone2: '',
+    eContactName2: null,
+    eContactPhone2: null,
   }
 
   handleTextboxChange = (evt) => {

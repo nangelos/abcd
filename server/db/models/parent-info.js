@@ -47,7 +47,7 @@ const ParentInfo = db.define('parent-info', {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  eConcactName2: {
+  eContactName2: {
     type: Sequelize.STRING,
   },
   eContactPhone2: {

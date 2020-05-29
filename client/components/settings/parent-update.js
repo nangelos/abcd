@@ -190,8 +190,8 @@ class ParentUpdate extends Component {
                     <InfoInput
                       name="eContactName2"
                       placeholder={
-                        parent.eConcactName2
-                          ? parent.eConcactName2
+                        parent.eContactName2
+                          ? parent.eContactName2
                           : 'Secondary Contact'
                       }
                       style={{width: '400px', marginRight: '50px'}}
