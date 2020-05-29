@@ -32,7 +32,7 @@ class ParentInfo extends Component {
     parentZip: '',
     eContactName1: '',
     eContactPhone1: '',
-    eConcactName2: '',
+    eContactName2: '',
     eContactPhone2: '',
   }
 
@@ -41,9 +41,31 @@ class ParentInfo extends Component {
     this.setState({[name]: value})
   }
 
+  formatPhoneNbrs = (obj) => {
+    const nums = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    const phones = [
+      'parentCell',
+      'parentWork',
+      'eContactPhone1',
+      'eContactPhone2',
+    ]
+    Object.keys(obj).forEach((key) => {
+      if (phones.includes(key) && obj[key] !== null) {
+        let raw = obj[key]
+        raw = raw.split('').filter((n) => nums.includes(n))
+        raw.splice(6, 0, '-')
+        raw.splice(3, 0, '-')
+        let final = raw.join('')
+        obj[key] = final
+      }
+    })
+    return obj
+  }
+
   handleSubmit = () => {
     const {createParentInfo} = this.props
-    createParentInfo(this.state)
+    let formatted = this.formatPhoneNbrs(this.state)
+    createParentInfo(formatted)
   }
 
   componentDidMount() {
