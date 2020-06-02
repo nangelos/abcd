@@ -46,3 +46,16 @@ router.get('/:id', async (req, res, next) => {
     next(err)
   }
 })
+
+router.get('/user/:id', async (req, res, next) => {
+  try {
+    console.log('get user/:id params: ', req.params)
+    let {id} = req.params
+    const user = await StudentInfo.findAll({
+      where: {userId: id},
+    })
+    res.json(user)
+  } catch (err) {
+    next(err)
+  }
+})
