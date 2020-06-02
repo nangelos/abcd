@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import {changeParentInfo, changeStudentInfo} from '../../store'
 import {secondaryColor, primaryColor} from '../../constants'
 import ParentUpdate from './parent-update'
-import StudentInfo from '../register/student-info'
+import StudentUpdate from './student-update'
 
 const SettingsWrapper = styled.div`
   background: ${secondaryColor};
@@ -81,7 +81,7 @@ class Settings extends Component {
             {active === 'ParentInfo' ? (
               <ParentUpdate userId={this.userId} />
             ) : active === 'StudentInfo' ? (
-              <StudentInfo userId={this.userId} />
+              <StudentUpdate userId={this.userId} />
             ) : (
               <h1>Payment Info</h1>
             )}
