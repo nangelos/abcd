@@ -144,13 +144,15 @@ class StudentInput extends Component {
                 }
                 style={{
                   width: '400px',
-                  height: '150px',
+                  height: '120px',
                   margin: '5px',
                   fontSize: 'medium',
                 }}
               ></textarea>
             </InfoRow>
-            <h3 style={{textAlign: 'center'}}>Update Days for Registration</h3>
+            <h3 style={{textAlign: 'center', margin: '0px'}}>
+              Update Days for Registration
+            </h3>
             <div id="days-row">
               {daysList ? (
                 daysList.map((val) => (

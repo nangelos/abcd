@@ -11,7 +11,7 @@ import {
   InfoRow,
   infoString,
 } from '../../constants'
-import {changeStudentInfo, fetchParentStudent} from '../../store'
+import {fetchParentStudent} from '../../store'
 import StudentInput from './student-input'
 
 const DayButton = styled.button`
@@ -92,7 +92,7 @@ class StudentUpdate extends Component {
           <StudentWrapper>
             <select
               name="active"
-              style={{fontSize: 'large', height: '30px', margin: '10px'}}
+              style={{fontSize: 'large', height: '30px', margin: '0px'}}
               onChange={this.handleTextboxChange}
               defaultValue="Choose Student"
             >
@@ -108,11 +108,7 @@ class StudentUpdate extends Component {
             {studentList
               .filter((s) => s.studentFirst === this.state.active)
               .map((child) => (
-                <StudentInput
-                  key={child.id}
-                  student={child}
-                  changeStudentInfo={changeStudentInfo}
-                />
+                <StudentInput key={child.id} student={child} />
               ))}
           </StudentWrapper>
         ) : (
