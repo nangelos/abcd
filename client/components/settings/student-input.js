@@ -35,8 +35,8 @@ const DayButton = styled.button`
 const StudentWrapper = styled.div`
   width: 90%;
   background: ${secondaryColor};
-  margin: 10px;
-  padding: 5px;
+  // margin: 10px;
+  // padding: 5px;
   display: inline-block;
 `
 
@@ -84,7 +84,6 @@ class StudentInput extends Component {
   }
 
   render() {
-    console.log(this.props)
     let {student} = this.props
     return (
       <div style={{textAlign: 'center'}}>
@@ -187,7 +186,6 @@ class StudentInput extends Component {
             />
           </form>
         </StudentWrapper>
-        )
       </div>
     )
   }
@@ -197,5 +195,4 @@ const mapState = (state) => ({state})
 const mapDispatch = (dispatch) => ({
   updateStudentInfo: (id, data) => dispatch(changeStudentInfo(id, data)),
 })
-// export default StudentInput
 export default connect(mapState, mapDispatch)(StudentInput)

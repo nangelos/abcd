@@ -42,32 +42,14 @@ const StudentWrapper = styled.div`
 `
 
 class StudentUpdate extends Component {
-  // state = {
-  //   studentFirst: null,
-  //   studentLast: null,
-  //   schoolName: null,
-  //   grade: null,
-  //   teacherName: null,
-  //   mondayRegistered: null,
-  //   tuesdayRegistered: null,
-  //   wednesdayRegistered: null,
-  //   thursdayRegistered: null,
-  //   fridayRegistered: null,
-  //   additionalInfo: null,
-  // }
+  state = {
+    active: '',
+  }
 
-  // handleTextboxChange = (evt) => {
-  //   let {name, value} = evt.target
-  //   this.setState({[name]: value})
-  // }
-
-  // changeBinary = (evt, name, value) => {
-  //   evt.preventDefault()
-  //   let newName = `${name.toLowerCase()}Registered`
-  //   let newValue = !JSON.parse(value)
-  //   // Would be nice to find a way that didn't require double click for already selected days
-  //   this.setState({[newName]: newValue})
-  // }
+  handleTextboxChange = (evt) => {
+    let {name, value} = evt.target
+    this.setState({[name]: value})
+  }
 
   // handleSubmit = () => {
   //   const {updateStudentInfo} = this.props
@@ -89,118 +71,49 @@ class StudentUpdate extends Component {
     getAllStudentInfo(userId)
   }
 
+  nameSort(a, b) {
+    let nameA = a.studentFirst.toUpperCase()
+    let nameB = b.studentFirst.toUpperCase()
+    let comparison = 0
+    if (nameA > nameB) {
+      comparison = 1
+    } else if (nameA < nameB) {
+      comparison = -1
+    }
+    return comparison
+  }
+
   render() {
-    console.log(this.props.state)
     let {student} = this.props.state
     let studentList = student
-    student = student[0]
-    console.log('studentList: ', studentList)
     return (
       <div style={{textAlign: 'center'}}>
-        {student ? (
+        {studentList[0] ? (
           <StudentWrapper>
-            {studentList.map((child) => (
-              <StudentInput key={child.id} student={child} />
-            ))}
-            {/* <form onSubmit={this.handleSubmit}>
-              <InfoRow>
-                <p style={{width: '120px'}}>Full Name</p>
-                <InfoInput
-                  name="studentFirst"
-                  placeholder={student.studentFirst}
-                  onChange={this.handleTextboxChange}
+            <select
+              name="active"
+              style={{fontSize: 'large', height: '30px', margin: '10px'}}
+              onChange={this.handleTextboxChange}
+              defaultValue="Choose Student"
+            >
+              <option disabled hidden value="Choose Student">
+                Choose Student
+              </option>
+              {studentList.sort(this.nameSort).map((child) => (
+                <option key={child.id} value={child.studentFirst}>
+                  {child.studentFirst}
+                </option>
+              ))}
+            </select>
+            {studentList
+              .filter((s) => s.studentFirst === this.state.active)
+              .map((child) => (
+                <StudentInput
+                  key={child.id}
+                  student={child}
+                  changeStudentInfo={changeStudentInfo}
                 />
-                <InfoInput
-                  name="studentLast"
-                  placeholder={student.studentLast}
-                  onChange={this.handleTextboxChange}
-                />
-              </InfoRow>
-              <InfoRow>
-                <p style={{width: '120px'}}>School Info</p>
-                <select
-                  name="schoolName"
-                  defaultValue={student.schoolName}
-                  style={{fontSize: 'large', height: '30px', margin: '10px'}}
-                  onChange={this.handleTextboxChange}
-                >
-                  {schoolList.map((option, i) => (
-                    <option key={i} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-                <select
-                  name="grade"
-                  defaultValue={student.grade}
-                  style={{fontSize: 'large', height: '30px', margin: '10px'}}
-                  onChange={this.handleTextboxChange}
-                >
-                  {gradesList.map((option, i) => (
-                    <option key={i} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-                <InfoInput
-                  name="teacherName"
-                  placeholder={student.teacherName}
-                  onChange={this.handleTextboxChange}
-                />
-              </InfoRow>
-              <InfoRow>
-                <p style={{width: '120px'}}>Addtional Info</p>
-                <textarea
-                  name="additionalInfo"
-                  onChange={this.handleTextboxChange}
-                  placeholder={
-                    student.additionalInfo ? student.additionalInfo : infoString
-                  }
-                  style={{
-                    width: '400px',
-                    height: '150px',
-                    margin: '5px',
-                    fontSize: 'medium',
-                  }}
-                ></textarea>
-              </InfoRow>
-              <h3 style={{textAlign: 'center'}}>
-                Update Days for Registration
-              </h3>
-              <div id="days-row">
-                {daysList ? (
-                  daysList.map((val) => (
-                    <DayButton
-                      key={val}
-                      name={val}
-                      selected={
-                        this.state[`${val.toLowerCase()}Registered`] === null &&
-                        student[`${val.toLowerCase()}Registered`]
-                          ? student[`${val.toLowerCase()}Registered`]
-                          : this.state[`${val.toLowerCase()}Registered`]
-                      }
-                      onClick={(evt) =>
-                        this.changeBinary(
-                          evt,
-                          val,
-                          this.state[`${val.toLowerCase()}Registered`]
-                        )
-                      }
-                    >
-                      <h3>{val}</h3>
-                    </DayButton>
-                  ))
-                ) : (
-                  <h8>Loading...</h8>
-                )}
-              </div>
-              <input
-                type="submit"
-                value="Update"
-                id="submitButton"
-                style={{background: primaryColor}}
-              />
-            </form> */}
+              ))}
           </StudentWrapper>
         ) : (
           <h4>Loading...</h4>
@@ -213,7 +126,5 @@ class StudentUpdate extends Component {
 const mapState = (state) => ({state})
 const mapDispatch = (dispatch) => ({
   getAllStudentInfo: (id) => dispatch(fetchParentStudent(id)),
-  updateStudentInfo: (id, data) => dispatch(changeStudentInfo(id, data)),
 })
-// export default StudentUpdate
 export default connect(mapState, mapDispatch)(StudentUpdate)
