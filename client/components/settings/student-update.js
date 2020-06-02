@@ -1,38 +1,10 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import styled from 'styled-components'
-import {
-  schoolList,
-  gradesList,
-  daysList,
-  primaryColor,
-  secondaryColor,
-  InfoInput,
-  InfoRow,
-  infoString,
-} from '../../constants'
+import {primaryColor, secondaryColor} from '../../constants'
 import {fetchParentStudent} from '../../store'
 import StudentInput from './student-input'
 
-const DayButton = styled.button`
-  // font-weight: ${(props) => (props.selected ? 'bold' : 'normal')};
-  background: ${(props) => (props.selected ? primaryColor : 'white')};
-  color: ${(props) => (props.selected ? 'white' : 'black')};
-  border: ${(props) =>
-    props.selected ? `5px white solid` : '2px black solid'};
-  border-radius: 5px;
-  font-size: large;
-  font-weight: normal;
-  height: 120px;
-  width: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  type="submit";
-  &:hover {
-    cursor: pointer;
-  }
-`
 const StudentWrapper = styled.div`
   width: 90%;
   background: ${secondaryColor};
@@ -50,21 +22,6 @@ class StudentUpdate extends Component {
     let {name, value} = evt.target
     this.setState({[name]: value})
   }
-
-  // handleSubmit = () => {
-  //   const {updateStudentInfo} = this.props
-  //   const studentId = this.props.state.student[0].id
-  //   const list = this.state
-  //   const filtered = Object.keys(list)
-  //     .filter((key) => list[key] !== null)
-  //     .reduce((obj, key) => {
-  //       return {
-  //         ...obj,
-  //         [key]: list[key],
-  //       }
-  //     }, {})
-  //   updateStudentInfo(studentId, filtered)
-  // }
 
   componentDidMount() {
     const {userId, getAllStudentInfo} = this.props
