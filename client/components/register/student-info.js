@@ -28,7 +28,10 @@ const DayButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  type="submit"
+  type="submit";
+  &:hover {
+    cursor: pointer;
+  }
 `
 const StudentWrapper = styled.div`
   width: 90%;
