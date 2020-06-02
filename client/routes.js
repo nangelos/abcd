@@ -9,6 +9,7 @@ import {
   UserHome,
   Register,
   Settings,
+  Schedule,
 } from './components'
 import {me} from './store'
 
@@ -34,6 +35,7 @@ class Routes extends Component {
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
             <Route path="/register" component={Register} />
+            <Route path="/schedule" component={Schedule} />
             <Route path="/settings" component={Settings} />
           </Switch>
         )}
