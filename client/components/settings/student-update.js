@@ -11,7 +11,8 @@ import {
   InfoRow,
   infoString,
 } from '../../constants'
-import {changeStudentInfo, fetchStudent} from '../../store'
+import {changeStudentInfo, fetchParentStudent} from '../../store'
+import StudentInput from './student-input'
 
 const DayButton = styled.button`
   // font-weight: ${(props) => (props.selected ? 'bold' : 'normal')};
@@ -41,63 +42,67 @@ const StudentWrapper = styled.div`
 `
 
 class StudentUpdate extends Component {
-  state = {
-    studentFirst: null,
-    studentLast: null,
-    schoolName: null,
-    grade: null,
-    teacherName: null,
-    mondayRegistered: null,
-    tuesdayRegistered: null,
-    wednesdayRegistered: null,
-    thursdayRegistered: null,
-    fridayRegistered: null,
-    additionalInfo: null,
-  }
+  // state = {
+  //   studentFirst: null,
+  //   studentLast: null,
+  //   schoolName: null,
+  //   grade: null,
+  //   teacherName: null,
+  //   mondayRegistered: null,
+  //   tuesdayRegistered: null,
+  //   wednesdayRegistered: null,
+  //   thursdayRegistered: null,
+  //   fridayRegistered: null,
+  //   additionalInfo: null,
+  // }
 
-  handleTextboxChange = (evt) => {
-    let {name, value} = evt.target
-    this.setState({[name]: value})
-  }
+  // handleTextboxChange = (evt) => {
+  //   let {name, value} = evt.target
+  //   this.setState({[name]: value})
+  // }
 
-  changeBinary = (evt, name, value) => {
-    evt.preventDefault()
-    let newName = `${name.toLowerCase()}Registered`
-    let newValue = !JSON.parse(value)
-    // Would be nice to find a way that didn't require double click for already selected days
-    this.setState({[newName]: newValue})
-  }
+  // changeBinary = (evt, name, value) => {
+  //   evt.preventDefault()
+  //   let newName = `${name.toLowerCase()}Registered`
+  //   let newValue = !JSON.parse(value)
+  //   // Would be nice to find a way that didn't require double click for already selected days
+  //   this.setState({[newName]: newValue})
+  // }
 
-  handleSubmit = () => {
-    const {updateStudentInfo} = this.props
-    const studentId = this.props.state.student[0].id
-    const list = this.state
-    const filtered = Object.keys(list)
-      .filter((key) => list[key] !== null)
-      .reduce((obj, key) => {
-        return {
-          ...obj,
-          [key]: list[key],
-        }
-      }, {})
-    updateStudentInfo(studentId, filtered)
-  }
+  // handleSubmit = () => {
+  //   const {updateStudentInfo} = this.props
+  //   const studentId = this.props.state.student[0].id
+  //   const list = this.state
+  //   const filtered = Object.keys(list)
+  //     .filter((key) => list[key] !== null)
+  //     .reduce((obj, key) => {
+  //       return {
+  //         ...obj,
+  //         [key]: list[key],
+  //       }
+  //     }, {})
+  //   updateStudentInfo(studentId, filtered)
+  // }
 
   componentDidMount() {
-    //Need to grab student data
-    const {userId, getStudentInfo} = this.props
-    getStudentInfo(userId)
+    const {userId, getAllStudentInfo} = this.props
+    getAllStudentInfo(userId)
   }
 
   render() {
     console.log(this.props.state)
     let {student} = this.props.state
+    let studentList = student
     student = student[0]
+    console.log('studentList: ', studentList)
     return (
       <div style={{textAlign: 'center'}}>
         {student ? (
           <StudentWrapper>
-            <form onSubmit={this.handleSubmit}>
+            {studentList.map((child) => (
+              <StudentInput key={child.id} student={child} />
+            ))}
+            {/* <form onSubmit={this.handleSubmit}>
               <InfoRow>
                 <p style={{width: '120px'}}>Full Name</p>
                 <InfoInput
@@ -195,7 +200,7 @@ class StudentUpdate extends Component {
                 id="submitButton"
                 style={{background: primaryColor}}
               />
-            </form>
+            </form> */}
           </StudentWrapper>
         ) : (
           <h4>Loading...</h4>
@@ -207,7 +212,7 @@ class StudentUpdate extends Component {
 
 const mapState = (state) => ({state})
 const mapDispatch = (dispatch) => ({
-  getStudentInfo: (id) => dispatch(fetchStudent(id)),
+  getAllStudentInfo: (id) => dispatch(fetchParentStudent(id)),
   updateStudentInfo: (id, data) => dispatch(changeStudentInfo(id, data)),
 })
 // export default StudentUpdate
