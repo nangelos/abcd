@@ -27,7 +27,10 @@ const DayButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  type="submit"
+  type="submit";
+  &:hover {
+    cursor: pointer;
+  }
 `
 const StudentWrapper = styled.div`
   width: 90%;
@@ -61,13 +64,23 @@ class StudentUpdate extends Component {
     evt.preventDefault()
     let newName = `${name.toLowerCase()}Registered`
     let newValue = !JSON.parse(value)
+    // Would be nice to find a way that didn't require double click for already selected days
     this.setState({[newName]: newValue})
   }
 
-  handleSubmit = (evt) => {
-    evt.preventDefault()
-    const {createStudentInfo} = this.props
-    createStudentInfo(this.state)
+  handleSubmit = () => {
+    const {updateStudentInfo} = this.props
+    const studentId = this.props.state.student[0].id
+    const list = this.state
+    const filtered = Object.keys(list)
+      .filter((key) => list[key] !== null)
+      .reduce((obj, key) => {
+        return {
+          ...obj,
+          [key]: list[key],
+        }
+      }, {})
+    updateStudentInfo(studentId, filtered)
   }
 
   componentDidMount() {
@@ -79,7 +92,6 @@ class StudentUpdate extends Component {
   render() {
     console.log(this.props.state)
     let {student} = this.props.state
-    console.log(student[0])
     student = student[0]
     return (
       <div style={{textAlign: 'center'}}>
@@ -103,7 +115,7 @@ class StudentUpdate extends Component {
                 <p style={{width: '120px'}}>School Info</p>
                 <select
                   name="schoolName"
-                  value={student.schoolName}
+                  defaultValue={student.schoolName}
                   style={{fontSize: 'large', height: '30px', margin: '10px'}}
                   onChange={this.handleTextboxChange}
                 >
@@ -115,6 +127,7 @@ class StudentUpdate extends Component {
                 </select>
                 <select
                   name="grade"
+                  defaultValue={student.grade}
                   style={{fontSize: 'large', height: '30px', margin: '10px'}}
                   onChange={this.handleTextboxChange}
                 >
@@ -126,7 +139,7 @@ class StudentUpdate extends Component {
                 </select>
                 <InfoInput
                   name="teacherName"
-                  placeholder="Teacher's Name"
+                  placeholder={student.teacherName}
                   onChange={this.handleTextboxChange}
                 />
               </InfoRow>
@@ -135,7 +148,9 @@ class StudentUpdate extends Component {
                 <textarea
                   name="additionalInfo"
                   onChange={this.handleTextboxChange}
-                  placeholder={infoString}
+                  placeholder={
+                    student.additionalInfo ? student.additionalInfo : infoString
+                  }
                   style={{
                     width: '400px',
                     height: '150px',
@@ -145,7 +160,7 @@ class StudentUpdate extends Component {
                 ></textarea>
               </InfoRow>
               <h3 style={{textAlign: 'center'}}>
-                Select Days for Registration
+                Update Days for Registration
               </h3>
               <div id="days-row">
                 {daysList ? (
@@ -153,7 +168,12 @@ class StudentUpdate extends Component {
                     <DayButton
                       key={val}
                       name={val}
-                      selected={this.state[`${val.toLowerCase()}Registered`]}
+                      selected={
+                        this.state[`${val.toLowerCase()}Registered`] === null &&
+                        student[`${val.toLowerCase()}Registered`]
+                          ? student[`${val.toLowerCase()}Registered`]
+                          : this.state[`${val.toLowerCase()}Registered`]
+                      }
                       onClick={(evt) =>
                         this.changeBinary(
                           evt,
@@ -188,7 +208,7 @@ class StudentUpdate extends Component {
 const mapState = (state) => ({state})
 const mapDispatch = (dispatch) => ({
   getStudentInfo: (id) => dispatch(fetchStudent(id)),
-  updateStudentInfo: (id, data) => dispatch(changeStudentInfo(data)),
+  updateStudentInfo: (id, data) => dispatch(changeStudentInfo(id, data)),
 })
 // export default StudentUpdate
 export default connect(mapState, mapDispatch)(StudentUpdate)

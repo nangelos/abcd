@@ -58,7 +58,7 @@ export const changeStudentInfo = (id, info) => async (dispatch) => {
   }
   try {
     dispatch(updateStudentInfo(res.data))
-    history.push('api/schedule')
+    // history.push('/settings')
   } catch (err) {
     console.error(err)
   }
