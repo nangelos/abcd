@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
+import socket from '../../socket'
 import {primaryColor, secondaryColor} from '../../constants'
 import Square from './square'
 
@@ -12,6 +13,16 @@ const ScheduleWrapper = styled.div`
 `
 class Schedule extends Component {
   state = {}
+
+  studentId = 1
+
+  handleSubmit = (evt) => {
+    evt.preventDefault()
+    socket.emit('submitClick', (data) => {
+      console.log('submit was clicked')
+      console.log(data)
+    })
+  }
 
   render() {
     return (
@@ -29,23 +40,30 @@ class Schedule extends Component {
               </tr>
               <tr>
                 <td>
-                  <Square num="1" />
+                  <Square num="1" studentId={this.studentId} />
                 </td>
                 <td>
-                  <Square num="2" />
+                  <Square num="2" studentId={this.studentId} />
                 </td>
                 <td>
-                  <Square num="3" />
+                  <Square num="3" studentId={this.studentId} />
                 </td>
                 <td>
-                  <Square num="4" />
+                  <Square num="4" studentId={this.studentId} />
                 </td>
                 <td>
-                  <Square num="5" />
+                  <Square num="5" studentId={this.studentId} />
                 </td>
               </tr>
             </tbody>
           </table>
+          <input
+            id="submitButton"
+            style={{background: primaryColor}}
+            type="submit"
+            value="Update"
+            onClick={this.handleSubmit}
+          />
         </div>
       </ScheduleWrapper>
     )
