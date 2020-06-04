@@ -10,8 +10,8 @@ const CalendarSquare = styled.button`
   color: ${(p) => (p.absent ? 'white' : 'black')};
   font-weight: ${(p) => (p.absent ? 'bold' : 'normal')};
   padding: 10px;
-  height: 120px;
-  width: 120px;
+  height: 80px;
+  width: 100px;
   margin: 0px;
   border: 2px solid black;
   &:hover {

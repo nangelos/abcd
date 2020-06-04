@@ -14,8 +14,8 @@ const ScheduleWrapper = styled.div`
 `
 const MonthHeader = styled.div`
   display: flex;
-  justify-content: space-around;
-  padding: 20px 0px;
+  justify-content: space-between;
+  padding: 20px;
   width: '100%';
   background: ${primaryColor};
 `
@@ -39,6 +39,7 @@ class Schedule extends Component {
     super(props)
     this.state = {
       month: new Date().getMonth(),
+      year: new Date().getFullYear(),
     }
   }
 
@@ -46,13 +47,20 @@ class Schedule extends Component {
 
   prevMonth = (evt) => {
     evt.preventDefault()
-    this.setState((prevState) => ({month: prevState.month - 1}))
+    if (this.state.month !== 0) {
+      this.setState((prevState) => ({month: prevState.month - 1}))
+    } else {
+      this.setState((prevState) => ({month: 11, year: prevState.year - 1}))
+    }
   }
 
   nextMonth = (evt) => {
     evt.preventDefault()
-    this.setState((prevState) => ({month: prevState.month + 1}))
-    console.log(this.state)
+    if (this.state.month !== 11) {
+      this.setState((prevState) => ({month: prevState.month + 1}))
+    } else {
+      this.setState((prevState) => ({month: 0, year: prevState.year + 1}))
+    }
   }
 
   handleSubmit = (evt) => {
@@ -63,7 +71,24 @@ class Schedule extends Component {
     })
   }
 
-  blankWeek = [0, 1, 2, 3, 4, 5, 6]
+  blankWeek = [
+    {id: '00', day: '', date: ''},
+    {id: '01', day: '', date: ''},
+    {id: '02', day: '', date: ''},
+    {id: '03', day: '', date: ''},
+    {id: '04', day: '', date: ''},
+    {id: '05', day: '', date: ''},
+    {id: '06', day: '', date: ''},
+  ]
+  blankWeekFin = [
+    {id: '010', day: '', date: ''},
+    {id: '011', day: '', date: ''},
+    {id: '021', day: '', date: ''},
+    {id: '031', day: '', date: ''},
+    {id: '041', day: '', date: ''},
+    {id: '051', day: '', date: ''},
+    {id: '061', day: '', date: ''},
+  ]
   weekdays = [
     'Sunday',
     'Monday',
@@ -76,20 +101,39 @@ class Schedule extends Component {
 
   render() {
     const weekend = ['Saturday', 'Sunday']
-    const {month} = this.state
-    console.log(calendar)
-    let cutPoint = 7
+    const {month, year} = this.state
+    let cutPoint1 = 7
     try {
-      cutPoint = this.weekdays.indexOf(calendar[month].days[0].day)
+      cutPoint1 = this.weekdays.indexOf(calendar[month].days[0].day)
     } catch (err) {
-      console.log(err)
+      // console.log(err)
     }
+    let fullCal = [
+      ...this.blankWeek.slice(0, cutPoint1),
+      ...calendar[month].days,
+      ...this.blankWeekFin.slice(0, 7),
+    ]
+    let week1 = fullCal.slice(0, 7)
+    let week2 = fullCal.slice(7, 14)
+    let week3 = fullCal.slice(14, 21)
+    let week4 = fullCal.slice(21, 28)
+    let week5 = fullCal.slice(28, 35)
+    let week6 = fullCal.slice(35, 42)
+    // let allWeeks = [week1, week2, week3, week4, week5, week6]
+    // if (allWeeks[5].length < 7) {
+    //   allWeeks.pop()
+    // }
+    // console.log('allWeeks: ', allWeeks)
+    // console.log('week2: ', week2)
+    // console.log('week3: ', week3)
     return (
       <ScheduleWrapper>
         <div style={{textAlign: 'center'}}>
           <MonthHeader>
             <MonthButton onClick={this.prevMonth}>{'<'}</MonthButton>
-            <h1 style={{margin: '0px'}}>{calendar[month].month}</h1>
+            <h1
+              style={{margin: '0px'}}
+            >{`${calendar[month].month} ${year}`}</h1>
             <MonthButton onClick={this.nextMonth}>{'>'}</MonthButton>
           </MonthHeader>
           <table style={{margin: 'auto'}}>
@@ -104,37 +148,71 @@ class Schedule extends Component {
                 <th>Saturday</th>
               </tr>
               <tr>
-                {this.blankWeek
-                  .map((cell) => (
-                    <td key={cell}>
-                      <Square date="" weekend={true} />
-                    </td>
-                  ))
-                  .slice(0, cutPoint)}
-                {calendar[this.state.month].days.map((day) => (
-                  <td key={day.date}>
+                {week1.map((day) => (
+                  <td key={day.id || day.date}>
                     <Square
                       date={day.date}
-                      weekend={weekend.includes(day.day)}
+                      weekend={day.date === '' || weekend.includes(day.day)}
                       studentId={this.studentId}
                     />
                   </td>
                 ))}
-                {/* <td>
-                  <Square date="2" weekend={false} studentId={this.studentId} />
-                </td>
-                <td>
-                  <Square date="3" weekend={false} studentId={this.studentId} />
-                </td>
-                <td>
-                  <Square date="4" weekend={false} studentId={this.studentId} />
-                </td>
-                <td>
-                  <Square date="5" weekend={false} studentId={this.studentId} />
-                </td>
-                <td>
-                  <Square date="6" weekend={true} studentId={this.studentId} />
-                </td> */}
+              </tr>
+              <tr>
+                {week2.map((day) => (
+                  <td key={day.id || day.date}>
+                    <Square
+                      date={day.date}
+                      weekend={day.date === '' || weekend.includes(day.day)}
+                      studentId={this.studentId}
+                    />
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                {week3.map((day) => (
+                  <td key={day.id || day.date}>
+                    <Square
+                      date={day.date}
+                      weekend={day.date === '' || weekend.includes(day.day)}
+                      studentId={this.studentId}
+                    />
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                {week4.map((day) => (
+                  <td key={day.id || day.date}>
+                    <Square
+                      date={day.date}
+                      weekend={day.date === '' || weekend.includes(day.day)}
+                      studentId={this.studentId}
+                    />
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                {week5.map((day) => (
+                  <td key={day.id || day.date}>
+                    <Square
+                      date={day.date}
+                      weekend={day.date === '' || weekend.includes(day.day)}
+                      studentId={this.studentId}
+                    />
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                {week6.length === 7 &&
+                  week6.map((day) => (
+                    <td key={day.id || day.date}>
+                      <Square
+                        date={day.date}
+                        weekend={day.date === '' || weekend.includes(day.day)}
+                        studentId={this.studentId}
+                      />
+                    </td>
+                  ))}
               </tr>
             </tbody>
           </table>
