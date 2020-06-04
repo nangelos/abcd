@@ -12,7 +12,7 @@ const ScheduleWrapper = styled.div`
   padding: 5px;
   display: inline-block;
 `
-const MonthRow = styled.div`
+const MonthHeader = styled.div`
   display: flex;
   justify-content: space-around;
   padding: 20px 0px;
@@ -63,18 +63,35 @@ class Schedule extends Component {
     })
   }
 
+  blankWeek = [0, 1, 2, 3, 4, 5, 6]
+  weekdays = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ]
+
   render() {
     const weekend = ['Saturday', 'Sunday']
     const {month} = this.state
     console.log(calendar)
+    let cutPoint = 7
+    try {
+      cutPoint = this.weekdays.indexOf(calendar[month].days[0].day)
+    } catch (err) {
+      console.log(err)
+    }
     return (
       <ScheduleWrapper>
         <div style={{textAlign: 'center'}}>
-          <MonthRow>
+          <MonthHeader>
             <MonthButton onClick={this.prevMonth}>{'<'}</MonthButton>
             <h1 style={{margin: '0px'}}>{calendar[month].month}</h1>
             <MonthButton onClick={this.nextMonth}>{'>'}</MonthButton>
-          </MonthRow>
+          </MonthHeader>
           <table style={{margin: 'auto'}}>
             <tbody>
               <tr style={{margin: '10px 0px'}}>
@@ -87,9 +104,13 @@ class Schedule extends Component {
                 <th>Saturday</th>
               </tr>
               <tr>
-                <td>
-                  <Square date="" weekend={true} />
-                </td>
+                {this.blankWeek
+                  .map((cell) => (
+                    <td key={cell}>
+                      <Square date="" weekend={true} />
+                    </td>
+                  ))
+                  .slice(0, cutPoint)}
                 {calendar[this.state.month].days.map((day) => (
                   <td key={day.date}>
                     <Square
