@@ -5,16 +5,17 @@ import {primaryColor, secondaryColor} from '../../constants'
 
 const CalendarSquare = styled.button`
   type: submit;
-  background: ${(p) => (p.absent ? primaryColor : 'white')};
+  background: ${(p) =>
+    p.weekend ? 'gray' : p.absent ? primaryColor : 'white'};
   color: ${(p) => (p.absent ? 'white' : 'black')};
   font-weight: ${(p) => (p.absent ? 'bold' : 'normal')};
   padding: 10px;
-  height: 155px;
-  width: 155px;
+  height: 120px;
+  width: 120px;
   margin: 0px;
   border: 2px solid black;
   &:hover {
-    cursor: pointer;
+    ${(p) => (p.weekend ? '' : 'cursor: pointer')}
   }
   flex-flow: column;
   text-align: -webkit-right;
@@ -27,17 +28,22 @@ class Square extends Component {
 
   changeBinary = (evt) => {
     evt.preventDefault()
-    this.setState((prevState) => ({absent: !prevState.absent}))
+    const {weekend} = this.props
+    if (!weekend) {
+      this.setState((prevState) => ({absent: !prevState.absent}))
+    }
   }
 
   componentDidMount() {
     socket.on('submitClick', () => {
       //Need to get a studentID passed down
-      const {num, studentId} = this.props
+      const {date, studentId, weekend} = this.props
       const {absent} = this.state
-      console.log(
-        `component ${num} heard that & i am ${studentId} & i am ${absent}`
-      )
+      if (absent && !weekend) {
+        console.log(
+          `component ${date} heard that & i am ${studentId} & i am ${absent}`
+        )
+      }
     })
   }
 
@@ -49,9 +55,10 @@ class Square extends Component {
           name="square"
           value={this.state.absent}
           absent={this.state.absent}
+          weekend={props.weekend}
           onClick={this.changeBinary}
         >
-          {props.num}
+          {props.date}
         </CalendarSquare>
       </div>
     )
