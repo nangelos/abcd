@@ -2,7 +2,12 @@ import React, {Component} from 'react'
 import styled from 'styled-components'
 import socket from '../../socket'
 import {primaryColor, secondaryColor} from '../../constants'
-import {calendar} from './calendar'
+import {
+  defaultCalendar,
+  calendar2020,
+  calendar2021,
+  calendar2022,
+} from './calendar'
 import Square from './square'
 
 const ScheduleWrapper = styled.div`
@@ -99,33 +104,40 @@ class Schedule extends Component {
     'Saturday',
   ]
 
+  chooseYear = (year) => {
+    if (year === 2020 && calendar2020.length === 12) {
+      return calendar2020
+    } else if (year === 2021 && calendar2021.length === 12) {
+      return calendar2021
+    } else if (year === 2022 && calendar2022.length === 12) {
+      return calendar2022
+    } else {
+      return defaultCalendar
+    }
+  }
+
   render() {
     const weekend = ['Saturday', 'Sunday']
     const {month, year} = this.state
+    let calendar = this.chooseYear(year)
     let cutPoint1 = 7
+    let fullCal = []
     try {
       cutPoint1 = this.weekdays.indexOf(calendar[month].days[0].day)
+      fullCal = [
+        ...this.blankWeek.slice(0, cutPoint1),
+        ...calendar[month].days,
+        ...this.blankWeekFin.slice(0, 7),
+      ]
     } catch (err) {
       // console.log(err)
     }
-    let fullCal = [
-      ...this.blankWeek.slice(0, cutPoint1),
-      ...calendar[month].days,
-      ...this.blankWeekFin.slice(0, 7),
-    ]
     let week1 = fullCal.slice(0, 7)
     let week2 = fullCal.slice(7, 14)
     let week3 = fullCal.slice(14, 21)
     let week4 = fullCal.slice(21, 28)
     let week5 = fullCal.slice(28, 35)
     let week6 = fullCal.slice(35, 42)
-    // let allWeeks = [week1, week2, week3, week4, week5, week6]
-    // if (allWeeks[5].length < 7) {
-    //   allWeeks.pop()
-    // }
-    // console.log('allWeeks: ', allWeeks)
-    // console.log('week2: ', week2)
-    // console.log('week3: ', week3)
     return (
       <ScheduleWrapper>
         <div style={{textAlign: 'center'}}>
@@ -136,93 +148,102 @@ class Schedule extends Component {
             >{`${calendar[month].month} ${year}`}</h1>
             <MonthButton onClick={this.nextMonth}>{'>'}</MonthButton>
           </MonthHeader>
-          <table style={{margin: 'auto'}}>
-            <tbody>
-              <tr style={{margin: '10px 0px'}}>
-                <th>Sunday</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-                <th>Saturday</th>
-              </tr>
-              <tr>
-                {week1.map((day) => (
-                  <td key={day.id || day.date}>
-                    <Square
-                      date={day.date}
-                      weekend={day.date === '' || weekend.includes(day.day)}
-                      studentId={this.studentId}
-                    />
-                  </td>
-                ))}
-              </tr>
-              <tr>
-                {week2.map((day) => (
-                  <td key={day.id || day.date}>
-                    <Square
-                      date={day.date}
-                      weekend={day.date === '' || weekend.includes(day.day)}
-                      studentId={this.studentId}
-                    />
-                  </td>
-                ))}
-              </tr>
-              <tr>
-                {week3.map((day) => (
-                  <td key={day.id || day.date}>
-                    <Square
-                      date={day.date}
-                      weekend={day.date === '' || weekend.includes(day.day)}
-                      studentId={this.studentId}
-                    />
-                  </td>
-                ))}
-              </tr>
-              <tr>
-                {week4.map((day) => (
-                  <td key={day.id || day.date}>
-                    <Square
-                      date={day.date}
-                      weekend={day.date === '' || weekend.includes(day.day)}
-                      studentId={this.studentId}
-                    />
-                  </td>
-                ))}
-              </tr>
-              <tr>
-                {week5.map((day) => (
-                  <td key={day.id || day.date}>
-                    <Square
-                      date={day.date}
-                      weekend={day.date === '' || weekend.includes(day.day)}
-                      studentId={this.studentId}
-                    />
-                  </td>
-                ))}
-              </tr>
-              <tr>
-                {week6.length === 7 &&
-                  week6.map((day) => (
-                    <td key={day.id || day.date}>
-                      <Square
-                        date={day.date}
-                        weekend={day.date === '' || weekend.includes(day.day)}
-                        studentId={this.studentId}
-                      />
-                    </td>
-                  ))}
-              </tr>
-            </tbody>
-          </table>
-          <input
-            id="submitButton"
-            style={{background: primaryColor}}
-            type="submit"
-            value="Update"
-            onClick={this.handleSubmit}
-          />
+          <div>
+            {fullCal.length ? (
+              <table style={{margin: 'auto'}}>
+                <tbody>
+                  <tr style={{margin: '10px 0px'}}>
+                    <th>Sunday</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                  </tr>
+                  <tr>
+                    {week1.map((day) => (
+                      <td key={day.id || day.date}>
+                        <Square
+                          date={day.date}
+                          weekend={day.date === '' || weekend.includes(day.day)}
+                          studentId={this.studentId}
+                        />
+                      </td>
+                    ))}
+                  </tr>
+                  <tr>
+                    {week2.map((day) => (
+                      <td key={day.id || day.date}>
+                        <Square
+                          date={day.date}
+                          weekend={day.date === '' || weekend.includes(day.day)}
+                          studentId={this.studentId}
+                        />
+                      </td>
+                    ))}
+                  </tr>
+                  <tr>
+                    {week3.map((day) => (
+                      <td key={day.id || day.date}>
+                        <Square
+                          date={day.date}
+                          weekend={day.date === '' || weekend.includes(day.day)}
+                          studentId={this.studentId}
+                        />
+                      </td>
+                    ))}
+                  </tr>
+                  <tr>
+                    {week4.map((day) => (
+                      <td key={day.id || day.date}>
+                        <Square
+                          date={day.date}
+                          weekend={day.date === '' || weekend.includes(day.day)}
+                          studentId={this.studentId}
+                        />
+                      </td>
+                    ))}
+                  </tr>
+                  <tr>
+                    {week5.map((day) => (
+                      <td key={day.id || day.date}>
+                        <Square
+                          date={day.date}
+                          weekend={day.date === '' || weekend.includes(day.day)}
+                          studentId={this.studentId}
+                        />
+                      </td>
+                    ))}
+                  </tr>
+                  <tr>
+                    {week6.length === 7 &&
+                      week6[0].id !== '010' &&
+                      week6.map((day) => (
+                        <td key={day.id || day.date}>
+                          <Square
+                            date={day.date}
+                            weekend={
+                              day.date === '' || weekend.includes(day.day)
+                            }
+                            studentId={this.studentId}
+                          />
+                        </td>
+                      ))}
+                  </tr>
+                </tbody>
+              </table>
+            ) : (
+              <h1>Month is Unavailable</h1>
+            )}
+            <input
+              id="submitButton"
+              style={{background: primaryColor}}
+              type="submit"
+              value="Update"
+              onClick={this.handleSubmit}
+            />
+          </div>
         </div>
       </ScheduleWrapper>
     )
