@@ -1,7 +1,13 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
 import socket from '../../socket'
-import {primaryColor, secondaryColor} from '../../constants'
+import {
+  primaryColor,
+  secondaryColor,
+  blankWeek,
+  blankWeekFin,
+  weekdays,
+} from '../../constants'
 import {
   defaultCalendar,
   calendar2020,
@@ -76,34 +82,6 @@ class Schedule extends Component {
     })
   }
 
-  blankWeek = [
-    {id: '00', day: '', date: ''},
-    {id: '01', day: '', date: ''},
-    {id: '02', day: '', date: ''},
-    {id: '03', day: '', date: ''},
-    {id: '04', day: '', date: ''},
-    {id: '05', day: '', date: ''},
-    {id: '06', day: '', date: ''},
-  ]
-  blankWeekFin = [
-    {id: '010', day: '', date: ''},
-    {id: '011', day: '', date: ''},
-    {id: '021', day: '', date: ''},
-    {id: '031', day: '', date: ''},
-    {id: '041', day: '', date: ''},
-    {id: '051', day: '', date: ''},
-    {id: '061', day: '', date: ''},
-  ]
-  weekdays = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-  ]
-
   chooseYear = (year) => {
     if (year === 2020 && calendar2020.length === 12) {
       return calendar2020
@@ -123,11 +101,11 @@ class Schedule extends Component {
     let cutPoint1 = 7
     let fullCal = []
     try {
-      cutPoint1 = this.weekdays.indexOf(calendar[month].days[0].day)
+      cutPoint1 = weekdays.indexOf(calendar[month].days[0].day)
       fullCal = [
-        ...this.blankWeek.slice(0, cutPoint1),
+        ...blankWeek.slice(0, cutPoint1),
         ...calendar[month].days,
-        ...this.blankWeekFin.slice(0, 7),
+        ...blankWeekFin.slice(0, 7),
       ]
     } catch (err) {
       // console.log(err)

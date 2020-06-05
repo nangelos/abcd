@@ -23,6 +23,24 @@ export const gradesList = [
 
 export const daysList = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 
+//prettier-ignore
+export const blankWeek = [
+    {id: '00', day: '', date: ''}, {id: '01', day: '', date: ''},
+    {id: '02', day: '', date: ''}, {id: '03', day: '', date: ''},
+    {id: '04', day: '', date: ''}, {id: '05', day: '', date: ''},
+    {id: '06', day: '', date: ''},
+  ]
+//prettier-ignore
+export const blankWeekFin = [
+    {id: '010', day: '', date: ''}, {id: '011', day: '', date: ''},
+    {id: '021', day: '', date: ''}, {id: '031', day: '', date: ''},
+    {id: '041', day: '', date: ''}, {id: '051', day: '', date: ''},
+    {id: '061', day: '', date: ''}
+  ]
+// prettier-ignore
+export const weekdays = ['Sunday', 'Monday', 'Tuesday',
+  'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
 export const infoString =
   'Please enter any additional information you would like us to know (e.g. allergies, special circumstances, etc.)'
 
