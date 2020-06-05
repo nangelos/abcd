@@ -110,24 +110,25 @@ class Schedule extends Component {
   handleTextboxChange = (evt) => {
     const {value, name} = evt.target
     const {student} = this.props.state
-    console.log(student)
     const filtered = student.filter((child) => child.studentFirst === value)[0]
     this.setState({[name]: filtered})
-    console.log(this.state)
   }
 
   handleSubmit = (evt) => {
     evt.preventDefault()
-    socket.emit('submitClick', (data) => {
-      console.log('submit was clicked')
-      console.log(data)
-    })
+    if (!this.state.selectedChild.id) {
+      alert('Please select a student to update their schedule.')
+    } else {
+      socket.emit('submitClick', (data) => {
+        console.log('submit was clicked')
+        console.log(data)
+      })
+    }
   }
 
   render() {
     const weekend = ['Saturday', 'Sunday']
     const {month, year, selectedChild} = this.state
-    console.log('selectedChild: ', selectedChild)
     const {student} = this.props.state
     let calendar = this.chooseYear(year)
     let cutPoint1 = 7
@@ -191,6 +192,8 @@ class Schedule extends Component {
                       {week1.map((day) => (
                         <td key={day.id || day.date}>
                           <Square
+                            year={year}
+                            month={calendar[month].month}
                             date={day.date}
                             weekend={
                               day.date === '' || weekend.includes(day.day)
@@ -204,6 +207,8 @@ class Schedule extends Component {
                       {week2.map((day) => (
                         <td key={day.id || day.date}>
                           <Square
+                            year={year}
+                            month={calendar[month].month}
                             date={day.date}
                             weekend={
                               day.date === '' || weekend.includes(day.day)
@@ -217,6 +222,8 @@ class Schedule extends Component {
                       {week3.map((day) => (
                         <td key={day.id || day.date}>
                           <Square
+                            year={year}
+                            month={calendar[month].month}
                             date={day.date}
                             weekend={
                               day.date === '' || weekend.includes(day.day)
@@ -230,6 +237,8 @@ class Schedule extends Component {
                       {week4.map((day) => (
                         <td key={day.id || day.date}>
                           <Square
+                            year={year}
+                            month={calendar[month].month}
                             date={day.date}
                             weekend={
                               day.date === '' || weekend.includes(day.day)
@@ -243,6 +252,8 @@ class Schedule extends Component {
                       {week5.map((day) => (
                         <td key={day.id || day.date}>
                           <Square
+                            year={year}
+                            month={calendar[month].month}
                             date={day.date}
                             weekend={
                               day.date === '' || weekend.includes(day.day)
@@ -258,6 +269,8 @@ class Schedule extends Component {
                         week6.map((day) => (
                           <td key={day.id || day.date}>
                             <Square
+                              year={year}
+                              month={calendar[month].month}
                               date={day.date}
                               weekend={
                                 day.date === '' || weekend.includes(day.day)
