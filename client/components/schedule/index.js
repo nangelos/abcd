@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import styled from 'styled-components'
 import socket from '../../socket'
 import {
@@ -15,6 +16,7 @@ import {
   calendar2022,
 } from './calendar'
 import Square from './square'
+import {fetchParentStudent} from '../../store'
 
 const ScheduleWrapper = styled.div`
   width: 90%;
@@ -51,6 +53,7 @@ class Schedule extends Component {
     this.state = {
       month: new Date().getMonth(),
       year: new Date().getFullYear(),
+      selectedChild: {},
     }
   }
 
@@ -74,14 +77,6 @@ class Schedule extends Component {
     }
   }
 
-  handleSubmit = (evt) => {
-    evt.preventDefault()
-    socket.emit('submitClick', (data) => {
-      console.log('submit was clicked')
-      console.log(data)
-    })
-  }
-
   chooseYear = (year) => {
     if (year === 2020 && calendar2020.length === 12) {
       return calendar2020
@@ -94,9 +89,46 @@ class Schedule extends Component {
     }
   }
 
+  nameSort(a, b) {
+    let nameA = a.studentFirst.toUpperCase()
+    let nameB = b.studentFirst.toUpperCase()
+    let comparison = 0
+    if (nameA > nameB) {
+      comparison = 1
+    } else if (nameA < nameB) {
+      comparison = -1
+    }
+    return comparison
+  }
+
+  componentDidMount() {
+    const {user} = this.props.state
+    const {getAllStudentInfo} = this.props
+    getAllStudentInfo(user.id)
+  }
+
+  handleTextboxChange = (evt) => {
+    const {value, name} = evt.target
+    const {student} = this.props.state
+    console.log(student)
+    const filtered = student.filter((child) => child.studentFirst === value)[0]
+    this.setState({[name]: filtered})
+    console.log(this.state)
+  }
+
+  handleSubmit = (evt) => {
+    evt.preventDefault()
+    socket.emit('submitClick', (data) => {
+      console.log('submit was clicked')
+      console.log(data)
+    })
+  }
+
   render() {
     const weekend = ['Saturday', 'Sunday']
-    const {month, year} = this.state
+    const {month, year, selectedChild} = this.state
+    console.log('selectedChild: ', selectedChild)
+    const {student} = this.props.state
     let calendar = this.chooseYear(year)
     let cutPoint1 = 7
     let fullCal = []
@@ -118,114 +150,148 @@ class Schedule extends Component {
     let week6 = fullCal.slice(35, 42)
     return (
       <ScheduleWrapper>
-        <div style={{textAlign: 'center'}}>
-          <MonthHeader>
-            <MonthButton onClick={this.prevMonth}>{'<'}</MonthButton>
-            <h1
-              style={{margin: '0px'}}
-            >{`${calendar[month].month} ${year}`}</h1>
-            <MonthButton onClick={this.nextMonth}>{'>'}</MonthButton>
-          </MonthHeader>
-          <div>
-            {fullCal.length ? (
-              <table style={{margin: 'auto'}}>
-                <tbody>
-                  <tr style={{margin: '10px 0px'}}>
-                    <th>Sunday</th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                    <th>Saturday</th>
-                  </tr>
-                  <tr>
-                    {week1.map((day) => (
-                      <td key={day.id || day.date}>
-                        <Square
-                          date={day.date}
-                          weekend={day.date === '' || weekend.includes(day.day)}
-                          studentId={this.studentId}
-                        />
-                      </td>
-                    ))}
-                  </tr>
-                  <tr>
-                    {week2.map((day) => (
-                      <td key={day.id || day.date}>
-                        <Square
-                          date={day.date}
-                          weekend={day.date === '' || weekend.includes(day.day)}
-                          studentId={this.studentId}
-                        />
-                      </td>
-                    ))}
-                  </tr>
-                  <tr>
-                    {week3.map((day) => (
-                      <td key={day.id || day.date}>
-                        <Square
-                          date={day.date}
-                          weekend={day.date === '' || weekend.includes(day.day)}
-                          studentId={this.studentId}
-                        />
-                      </td>
-                    ))}
-                  </tr>
-                  <tr>
-                    {week4.map((day) => (
-                      <td key={day.id || day.date}>
-                        <Square
-                          date={day.date}
-                          weekend={day.date === '' || weekend.includes(day.day)}
-                          studentId={this.studentId}
-                        />
-                      </td>
-                    ))}
-                  </tr>
-                  <tr>
-                    {week5.map((day) => (
-                      <td key={day.id || day.date}>
-                        <Square
-                          date={day.date}
-                          weekend={day.date === '' || weekend.includes(day.day)}
-                          studentId={this.studentId}
-                        />
-                      </td>
-                    ))}
-                  </tr>
-                  <tr>
-                    {week6.length === 7 &&
-                      week6[0].id !== '010' &&
-                      week6.map((day) => (
+        {Array.isArray(student) ? (
+          <div style={{textAlign: 'center'}}>
+            <select
+              name="selectedChild"
+              onChange={this.handleTextboxChange}
+              style={{fontSize: 'large', height: '30px', marginBottom: '5px'}}
+              defaultValue="Choose Student"
+            >
+              <option disabled hidden value="Choose Student">
+                Choose Student
+              </option>
+              {student.sort(this.nameSort).map((child) => (
+                <option key={child.id} value={child.studentFirst}>
+                  {child.studentFirst}
+                </option>
+              ))}
+            </select>
+            <MonthHeader>
+              <MonthButton onClick={this.prevMonth}>{'<'}</MonthButton>
+              <h1
+                style={{margin: '0px'}}
+              >{`${calendar[month].month} ${year}`}</h1>
+              <MonthButton onClick={this.nextMonth}>{'>'}</MonthButton>
+            </MonthHeader>
+            <div>
+              {fullCal.length ? (
+                <table style={{margin: 'auto'}}>
+                  <tbody>
+                    <tr style={{margin: '10px 0px'}}>
+                      <th>Sunday</th>
+                      <th>Monday</th>
+                      <th>Tuesday</th>
+                      <th>Wednesday</th>
+                      <th>Thursday</th>
+                      <th>Friday</th>
+                      <th>Saturday</th>
+                    </tr>
+                    <tr>
+                      {week1.map((day) => (
                         <td key={day.id || day.date}>
                           <Square
                             date={day.date}
                             weekend={
                               day.date === '' || weekend.includes(day.day)
                             }
-                            studentId={this.studentId}
+                            student={selectedChild}
                           />
                         </td>
                       ))}
-                  </tr>
-                </tbody>
-              </table>
-            ) : (
-              <h1>Month is Unavailable</h1>
-            )}
-            <input
-              id="submitButton"
-              style={{background: primaryColor}}
-              type="submit"
-              value="Update"
-              onClick={this.handleSubmit}
-            />
+                    </tr>
+                    <tr>
+                      {week2.map((day) => (
+                        <td key={day.id || day.date}>
+                          <Square
+                            date={day.date}
+                            weekend={
+                              day.date === '' || weekend.includes(day.day)
+                            }
+                            student={selectedChild}
+                          />
+                        </td>
+                      ))}
+                    </tr>
+                    <tr>
+                      {week3.map((day) => (
+                        <td key={day.id || day.date}>
+                          <Square
+                            date={day.date}
+                            weekend={
+                              day.date === '' || weekend.includes(day.day)
+                            }
+                            student={selectedChild}
+                          />
+                        </td>
+                      ))}
+                    </tr>
+                    <tr>
+                      {week4.map((day) => (
+                        <td key={day.id || day.date}>
+                          <Square
+                            date={day.date}
+                            weekend={
+                              day.date === '' || weekend.includes(day.day)
+                            }
+                            student={selectedChild}
+                          />
+                        </td>
+                      ))}
+                    </tr>
+                    <tr>
+                      {week5.map((day) => (
+                        <td key={day.id || day.date}>
+                          <Square
+                            date={day.date}
+                            weekend={
+                              day.date === '' || weekend.includes(day.day)
+                            }
+                            student={selectedChild}
+                          />
+                        </td>
+                      ))}
+                    </tr>
+                    <tr>
+                      {week6.length === 7 &&
+                        week6[0].id !== '010' &&
+                        week6.map((day) => (
+                          <td key={day.id || day.date}>
+                            <Square
+                              date={day.date}
+                              weekend={
+                                day.date === '' || weekend.includes(day.day)
+                              }
+                              student={selectedChild}
+                            />
+                          </td>
+                        ))}
+                    </tr>
+                  </tbody>
+                </table>
+              ) : (
+                <h1>Month is Unavailable</h1>
+              )}
+              <input
+                id="submitButton"
+                style={{background: primaryColor}}
+                type="submit"
+                value="Update"
+                onClick={this.handleSubmit}
+              />
+            </div>
           </div>
-        </div>
+        ) : (
+          <h4>Loading...</h4>
+        )}
       </ScheduleWrapper>
     )
   }
 }
 
-export default Schedule
+const mapState = (state) => ({state})
+const mapDispatch = (dispatch) => ({
+  getAllStudentInfo: (id) => dispatch(fetchParentStudent(id)),
+})
+export default connect(mapState, mapDispatch)(Schedule)
+// export default Schedule

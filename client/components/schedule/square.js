@@ -37,11 +37,11 @@ class Square extends Component {
   componentDidMount() {
     socket.on('submitClick', () => {
       //Need to get a studentID passed down
-      const {date, studentId, weekend} = this.props
+      const {date, student, weekend} = this.props
       const {absent} = this.state
       if (absent && !weekend) {
         console.log(
-          `component ${date} heard that & i am ${studentId} & i am ${absent}`
+          `component ${date} heard that & i am ${student.id} & i am ${absent}`
         )
       }
     })
