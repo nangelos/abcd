@@ -6,11 +6,15 @@ import ParentUpdate from './parent-update'
 import StudentUpdate from './student-update'
 
 const SettingsWrapper = styled.div`
+  display: inline-block;
+  width: 100%;
+`
+
+const SettingsUpdate = styled.div`
   background: ${secondaryColor};
   margin: 10px;
   padding: 5px;
-  // display: inline-block;
-  width: 70%;
+  width: 80%;
 `
 const Sidebar = styled.div`
   width: 20%;
@@ -53,40 +57,42 @@ class Settings extends Component {
     const {active} = this.state
     return (
       <div style={{textAlign: 'center'}}>
-        <div style={{display: 'flex'}}>
-          <Sidebar>
-            <Tab
-              onClick={this.changeActive}
-              active={this.state.active === 'ParentInfo'}
-              value="ParentInfo"
-            >
-              Parent Info
-            </Tab>
-            <Tab
-              onClick={this.changeActive}
-              active={this.state.active === 'StudentInfo'}
-              value="StudentInfo"
-            >
-              Student Info
-            </Tab>
-            <Tab
-              onClick={this.changeActive}
-              active={this.state.active === 'Payment'}
-              value="Payment"
-            >
-              Payment
-            </Tab>
-          </Sidebar>
-          <SettingsWrapper>
-            {active === 'ParentInfo' ? (
-              <ParentUpdate userId={this.userId} />
-            ) : active === 'StudentInfo' ? (
-              <StudentUpdate userId={this.userId} />
-            ) : (
-              <h1>Payment Info</h1>
-            )}
-          </SettingsWrapper>
-        </div>
+        <SettingsWrapper>
+          <div style={{display: 'flex'}}>
+            <Sidebar>
+              <Tab
+                onClick={this.changeActive}
+                active={this.state.active === 'ParentInfo'}
+                value="ParentInfo"
+              >
+                Parent Info
+              </Tab>
+              <Tab
+                onClick={this.changeActive}
+                active={this.state.active === 'StudentInfo'}
+                value="StudentInfo"
+              >
+                Student Info
+              </Tab>
+              <Tab
+                onClick={this.changeActive}
+                active={this.state.active === 'Payment'}
+                value="Payment"
+              >
+                Payment
+              </Tab>
+            </Sidebar>
+            <SettingsUpdate>
+              {active === 'ParentInfo' ? (
+                <ParentUpdate userId={this.userId} />
+              ) : active === 'StudentInfo' ? (
+                <StudentUpdate userId={this.userId} />
+              ) : (
+                <h1>Payment Info</h1>
+              )}
+            </SettingsUpdate>
+          </div>
+        </SettingsWrapper>
       </div>
     )
   }

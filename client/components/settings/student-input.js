@@ -86,7 +86,7 @@ class StudentInput extends Component {
   render() {
     let {student} = this.props
     return (
-      <div style={{textAlign: 'center'}}>
+      <div style={{textAlign: 'center', width: '100%'}}>
         <StudentWrapper>
           <form onSubmit={this.handleSubmit}>
             <InfoRow>
