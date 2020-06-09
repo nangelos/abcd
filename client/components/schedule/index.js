@@ -150,154 +150,186 @@ class Schedule extends Component {
     let week5 = fullCal.slice(28, 35)
     let week6 = fullCal.slice(35, 42)
     return (
-      <ScheduleWrapper>
-        {Array.isArray(student) ? (
-          <div style={{textAlign: 'center'}}>
-            <select
-              name="selectedChild"
-              onChange={this.handleTextboxChange}
-              style={{fontSize: 'large', height: '30px', marginBottom: '5px'}}
-              defaultValue="Choose Student"
-            >
-              <option disabled hidden value="Choose Student">
-                Choose Student
-              </option>
-              {student.sort(this.nameSort).map((child) => (
-                <option key={child.id} value={child.studentFirst}>
-                  {child.studentFirst}
+      <div style={{textAlign: 'center'}}>
+        <ScheduleWrapper>
+          {Array.isArray(student) ? (
+            <div style={{textAlign: 'center'}}>
+              <select
+                name="selectedChild"
+                onChange={this.handleTextboxChange}
+                style={{fontSize: 'large', height: '30px', marginBottom: '5px'}}
+                defaultValue="Choose Student"
+              >
+                <option disabled hidden value="Choose Student">
+                  Choose Student
                 </option>
-              ))}
-            </select>
-            <MonthHeader>
-              <MonthButton onClick={this.prevMonth}>{'<'}</MonthButton>
-              <h1
-                style={{margin: '0px'}}
-              >{`${calendar[month].month} ${year}`}</h1>
-              <MonthButton onClick={this.nextMonth}>{'>'}</MonthButton>
-            </MonthHeader>
-            <div>
-              {fullCal.length ? (
-                <table style={{margin: 'auto'}}>
-                  <tbody>
-                    <tr style={{margin: '10px 0px'}}>
-                      <th>Sunday</th>
-                      <th>Monday</th>
-                      <th>Tuesday</th>
-                      <th>Wednesday</th>
-                      <th>Thursday</th>
-                      <th>Friday</th>
-                      <th>Saturday</th>
-                    </tr>
-                    <tr>
-                      {week1.map((day) => (
-                        <td key={day.id || day.date}>
-                          <Square
-                            year={year}
-                            month={calendar[month].month}
-                            date={day.date}
-                            weekend={
-                              day.date === '' || weekend.includes(day.day)
-                            }
-                            student={selectedChild}
-                          />
-                        </td>
-                      ))}
-                    </tr>
-                    <tr>
-                      {week2.map((day) => (
-                        <td key={day.id || day.date}>
-                          <Square
-                            year={year}
-                            month={calendar[month].month}
-                            date={day.date}
-                            weekend={
-                              day.date === '' || weekend.includes(day.day)
-                            }
-                            student={selectedChild}
-                          />
-                        </td>
-                      ))}
-                    </tr>
-                    <tr>
-                      {week3.map((day) => (
-                        <td key={day.id || day.date}>
-                          <Square
-                            year={year}
-                            month={calendar[month].month}
-                            date={day.date}
-                            weekend={
-                              day.date === '' || weekend.includes(day.day)
-                            }
-                            student={selectedChild}
-                          />
-                        </td>
-                      ))}
-                    </tr>
-                    <tr>
-                      {week4.map((day) => (
-                        <td key={day.id || day.date}>
-                          <Square
-                            year={year}
-                            month={calendar[month].month}
-                            date={day.date}
-                            weekend={
-                              day.date === '' || weekend.includes(day.day)
-                            }
-                            student={selectedChild}
-                          />
-                        </td>
-                      ))}
-                    </tr>
-                    <tr>
-                      {week5.map((day) => (
-                        <td key={day.id || day.date}>
-                          <Square
-                            year={year}
-                            month={calendar[month].month}
-                            date={day.date}
-                            weekend={
-                              day.date === '' || weekend.includes(day.day)
-                            }
-                            student={selectedChild}
-                          />
-                        </td>
-                      ))}
-                    </tr>
-                    <tr>
-                      {week6.length === 7 &&
-                        week6[0].id !== '010' &&
-                        week6.map((day) => (
+                {student.sort(this.nameSort).map((child) => (
+                  <option key={child.id} value={child.studentFirst}>
+                    {child.studentFirst}
+                  </option>
+                ))}
+              </select>
+              <MonthHeader>
+                <MonthButton onClick={this.prevMonth}>{'<'}</MonthButton>
+                <h1
+                  style={{margin: '0px'}}
+                >{`${calendar[month].month} ${year}`}</h1>
+                <MonthButton onClick={this.nextMonth}>{'>'}</MonthButton>
+              </MonthHeader>
+              <div>
+                {fullCal.length ? (
+                  <table style={{margin: 'auto'}}>
+                    <tbody>
+                      <tr style={{margin: '10px 0px'}}>
+                        <th>Sunday</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                        <th>Saturday</th>
+                      </tr>
+                      <tr>
+                        {week1.map((day) => (
                           <td key={day.id || day.date}>
                             <Square
                               year={year}
                               month={calendar[month].month}
                               date={day.date}
                               weekend={
-                                day.date === '' || weekend.includes(day.day)
+                                day.date === '' ||
+                                weekend.includes(day.day) ||
+                                new Date(
+                                  `${calendar[month].month} ${day.date} ${year}`
+                                ) <
+                                  new Date() - 8.64e7
                               }
                               student={selectedChild}
                             />
                           </td>
                         ))}
-                    </tr>
-                  </tbody>
-                </table>
-              ) : (
-                <h1>Month is Unavailable</h1>
-              )}
-              <input
-                id="submitButton"
-                style={{background: primaryColor}}
-                type="submit"
-                value="Update"
-                onClick={this.handleSubmit}
-              />
+                      </tr>
+                      <tr>
+                        {week2.map((day) => (
+                          <td key={day.id || day.date}>
+                            <Square
+                              year={year}
+                              month={calendar[month].month}
+                              date={day.date}
+                              weekend={
+                                day.date === '' ||
+                                weekend.includes(day.day) ||
+                                new Date(
+                                  `${calendar[month].month} ${day.date} ${year}`
+                                ) <
+                                  new Date() - 8.64e7
+                              }
+                              student={selectedChild}
+                            />
+                          </td>
+                        ))}
+                      </tr>
+                      <tr>
+                        {week3.map((day) => (
+                          <td key={day.id || day.date}>
+                            <Square
+                              year={year}
+                              month={calendar[month].month}
+                              date={day.date}
+                              weekend={
+                                day.date === '' ||
+                                weekend.includes(day.day) ||
+                                new Date(
+                                  `${calendar[month].month} ${day.date} ${year}`
+                                ) <
+                                  new Date() - 8.64e7
+                              }
+                              student={selectedChild}
+                            />
+                          </td>
+                        ))}
+                      </tr>
+                      <tr>
+                        {week4.map((day) => (
+                          <td key={day.id || day.date}>
+                            <Square
+                              year={year}
+                              month={calendar[month].month}
+                              date={day.date}
+                              weekend={
+                                day.date === '' ||
+                                weekend.includes(day.day) ||
+                                new Date(
+                                  `${calendar[month].month} ${day.date} ${year}`
+                                ) <
+                                  new Date() - 8.64e7
+                              }
+                              student={selectedChild}
+                            />
+                          </td>
+                        ))}
+                      </tr>
+                      <tr>
+                        {week5.map((day) => (
+                          <td key={day.id || day.date}>
+                            <Square
+                              year={year}
+                              month={calendar[month].month}
+                              date={day.date}
+                              weekend={
+                                day.date === '' ||
+                                weekend.includes(day.day) ||
+                                new Date(
+                                  `${calendar[month].month} ${day.date} ${year}`
+                                ) <
+                                  new Date() - 8.64e7
+                              }
+                              student={selectedChild}
+                            />
+                          </td>
+                        ))}
+                      </tr>
+                      <tr>
+                        {week6.length === 7 &&
+                          week6[0].id !== '010' &&
+                          week6.map((day) => (
+                            <td key={day.id || day.date}>
+                              <Square
+                                year={year}
+                                month={calendar[month].month}
+                                date={day.date}
+                                weekend={
+                                  day.date === '' ||
+                                  weekend.includes(day.day) ||
+                                  new Date(
+                                    `${calendar[month].month} ${day.date} ${year}`
+                                  ) <
+                                    new Date() - 8.64e7
+                                }
+                                student={selectedChild}
+                              />
+                            </td>
+                          ))}
+                      </tr>
+                    </tbody>
+                  </table>
+                ) : (
+                  <h1>Month is Unavailable</h1>
+                )}
+                <input
+                  id="submitButton"
+                  style={{background: primaryColor}}
+                  type="submit"
+                  value="Update"
+                  onClick={this.handleSubmit}
+                />
+              </div>
             </div>
-          </div>
-        ) : (
-          <h4>Loading...</h4>
-        )}
-      </ScheduleWrapper>
+          ) : (
+            <h4>Loading...</h4>
+          )}
+        </ScheduleWrapper>
+      </div>
     )
   }
 }
@@ -307,4 +339,3 @@ const mapDispatch = (dispatch) => ({
   getAllStudentInfo: (id) => dispatch(fetchParentStudent(id)),
 })
 export default connect(mapState, mapDispatch)(Schedule)
-// export default Schedule

@@ -21,6 +21,9 @@ const CalendarSquare = styled.button`
   text-align: -webkit-right;
   font-size: large;
   top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: normal;
 `
 
 class Square extends Component {
@@ -36,12 +39,11 @@ class Square extends Component {
 
   componentDidMount() {
     socket.on('submitClick', () => {
-      //Need to get a studentID passed down
-      const {date, student, weekend} = this.props
+      const {date, student, weekend, month, year} = this.props
       const {absent} = this.state
       if (absent && !weekend) {
         console.log(
-          `component ${date} heard that & i am ${student.id} & i am ${absent}`
+          `${student.studentFirst} will be absent on ${month}, ${date} ${year}`
         )
       }
     })
@@ -59,6 +61,12 @@ class Square extends Component {
           onClick={this.changeBinary}
         >
           {props.date}
+          <br />
+          <div style={{textAlign: 'center'}}>
+            <h4 style={{margin: '0px', color: 'white'}}>
+              {props.weekend ? '' : 'Absent'}
+            </h4>
+          </div>
         </CalendarSquare>
       </div>
     )
