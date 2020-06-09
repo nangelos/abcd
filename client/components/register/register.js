@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import socket from '../../socket'
 import styled from 'styled-components'
+import {connect} from 'react-redux'
 import ParentInfo from './parent-info'
+import {fetchParent, fetchParentStudent} from '../../store'
 import {
   schoolList,
   gradesList,
@@ -52,6 +54,14 @@ class Register extends Component {
     this.setState((prevState) => ({numChildren: prevState.numChildren - 1}))
   }
 
+  componentDidMount() {
+    const {state} = this.props
+    const {getParent, getAllStudentInfo} = this.props
+    const userId = state.user.id
+    getParent(userId)
+    getAllStudentInfo(userId)
+  }
+
   handleSubmit = (evt) => {
     evt.preventDefault()
     socket.emit('submitClick', (data) => {
@@ -61,6 +71,7 @@ class Register extends Component {
   }
 
   render() {
+    const {user, parent, student} = this.props.state
     const {addButtonHovered, numChildren} = this.state
     const style = addButtonHovered
       ? {paddingLeft: '10px'}
@@ -73,7 +84,13 @@ class Register extends Component {
     return (
       <div style={{textAlign: 'center'}}>
         <h2 style={{textAlign: 'left'}}>Register Your Student</h2>
-        <ParentInfo />
+        {parent[0] ? (
+          <div>
+            <h1>Your info is here</h1>
+          </div>
+        ) : (
+          <ParentInfo />
+        )}
         {children.map((i) => (
           <StudentInfo key={i} />
         ))}
@@ -112,4 +129,9 @@ class Register extends Component {
   }
 }
 
-export default Register
+const mapState = (state) => ({state})
+const mapDispatch = (dispatch) => ({
+  getParent: (id) => dispatch(fetchParent(id)),
+  getAllStudentInfo: (id) => dispatch(fetchParentStudent(id)),
+})
+export default connect(mapState, mapDispatch)(Register)
