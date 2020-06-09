@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import {changeParentInfo, changeStudentInfo} from '../../store'
+import {connect} from 'react-redux'
 import {secondaryColor, primaryColor} from '../../constants'
 import ParentUpdate from './parent-update'
 import StudentUpdate from './student-update'
@@ -45,7 +45,6 @@ class Settings extends Component {
     active: 'ParentInfo',
     students: [],
   }
-  userId = 1
 
   changeActive = (evt) => {
     evt.preventDefault()
@@ -55,6 +54,7 @@ class Settings extends Component {
 
   render() {
     const {active} = this.state
+    const userId = this.props.state.user.id
     return (
       <div style={{textAlign: 'center'}}>
         <SettingsWrapper>
@@ -84,9 +84,9 @@ class Settings extends Component {
             </Sidebar>
             <SettingsUpdate>
               {active === 'ParentInfo' ? (
-                <ParentUpdate userId={this.userId} />
+                <ParentUpdate userId={userId} />
               ) : active === 'StudentInfo' ? (
-                <StudentUpdate userId={this.userId} />
+                <StudentUpdate userId={userId} />
               ) : (
                 <h1>Payment Info</h1>
               )}
@@ -98,4 +98,5 @@ class Settings extends Component {
   }
 }
 
-export default Settings
+const mapState = (state) => ({state})
+export default connect(mapState)(Settings)
