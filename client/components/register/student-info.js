@@ -70,6 +70,8 @@ class StudentInfo extends Component {
 
   handleSubmit = () => {
     const {createStudentInfo} = this.props
+    let userId = this.props.state.user.id
+    this.setState({userId})
     createStudentInfo(this.state)
   }
 

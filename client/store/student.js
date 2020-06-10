@@ -98,7 +98,7 @@ export default function (state = defaultStudent, action) {
     case GET_ALL_STUDENT_INFO:
       return action.student
     case CREATE_INFO:
-      return action.student
+      return [...state, action.student]
     case UPDATE_STUDENT_INFO:
       return action.student
     default:
