@@ -55,15 +55,16 @@ export const fetchAllStudents = () => async (dispatch) => {
 }
 
 export const addStudentInfo = (info) => async (dispatch) => {
-  let res
-  console.log('addStudentInfo: ', info)
+  let res, secRes
+  const userId = info.userId
   try {
     res = await axios.post(`api/students`, info)
   } catch (err) {
     return dispatch(createStudentInfo({error: err}))
   }
   try {
-    dispatch(getStudentInfo(res.data))
+    secRes = await axios.get(`api/students/user/${userId}`)
+    dispatch(getParentStudent(secRes.data))
     // history.push('/schedule')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)

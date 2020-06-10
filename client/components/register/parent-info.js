@@ -36,6 +36,22 @@ class ParentInfo extends Component {
     eContactPhone2: null,
   }
 
+  defaultState = {
+    parentFirst: '',
+    parentLast: '',
+    parentCell: '',
+    parentWork: null,
+    parentEmail: '',
+    parentAddress: '',
+    parentCity: '',
+    parentState: 'AL',
+    parentZip: '',
+    eContactName1: '',
+    eContactPhone1: '',
+    eContactName2: null,
+    eContactPhone2: null,
+  }
+
   handleTextboxChange = (evt) => {
     let {name, value} = evt.target
     this.setState({[name]: value})
@@ -63,9 +79,11 @@ class ParentInfo extends Component {
   }
 
   handleSubmit = () => {
-    const {createParentInfo} = this.props
-    let formatted = this.formatPhoneNbrs(this.state)
-    createParentInfo(formatted)
+    if (JSON.stringify(this.state) === !JSON.stringify(this.defaultState)) {
+      const {createParentInfo} = this.props
+      let formatted = this.formatPhoneNbrs(this.state)
+      createParentInfo(formatted)
+    }
   }
 
   componentDidMount() {
