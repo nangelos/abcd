@@ -79,8 +79,10 @@ class ParentInfo extends Component {
   }
 
   handleSubmit = () => {
-    if (JSON.stringify(this.state) === !JSON.stringify(this.defaultState)) {
+    if (JSON.stringify(this.state) !== JSON.stringify(this.defaultState)) {
       const {createParentInfo} = this.props
+      const userId = this.props.state.user.id
+      this.setState({userId})
       let formatted = this.formatPhoneNbrs(this.state)
       createParentInfo(formatted)
     }

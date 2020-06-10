@@ -70,7 +70,7 @@ export default function (state = defaultParent, action) {
     case GET_PARENT_INFO:
       return action.parent
     case CREATE_INFO:
-      return action.parent
+      return [...state, action.parent]
     case UPDATE_PARENT_INFO:
       return action.parent
     default:

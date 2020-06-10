@@ -63,7 +63,7 @@ class Register extends Component {
   }
 
   handleSubmit = (evt) => {
-    evt.preventDefault()
+    // evt.preventDefault()
     socket.emit('submitClick', (data) => {
       console.log('submit was clicked')
       console.log(data)
