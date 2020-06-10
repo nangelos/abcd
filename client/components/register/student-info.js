@@ -56,6 +56,20 @@ class StudentInfo extends Component {
     additionalInfo: '',
   }
 
+  defaultState = {
+    studentFirst: '',
+    studentLast: '',
+    schoolName: 'West Elementary',
+    grade: 'Pre-K',
+    teacherName: '',
+    mondayRegistered: false,
+    tuesdayRegistered: false,
+    wednesdayRegistered: false,
+    thursdayRegistered: false,
+    fridayRegistered: false,
+    additionalInfo: '',
+  }
+
   handleTextboxChange = (evt) => {
     let {name, value} = evt.target
     this.setState({[name]: value})
@@ -69,10 +83,12 @@ class StudentInfo extends Component {
   }
 
   handleSubmit = () => {
-    const {createStudentInfo} = this.props
-    let userId = this.props.state.user.id
-    this.setState({userId})
-    createStudentInfo(this.state)
+    if (JSON.stringify(this.defaultState) !== JSON.stringify(this.state)) {
+      const {createStudentInfo} = this.props
+      let userId = this.props.state.user.id
+      this.setState({userId})
+      createStudentInfo(this.state)
+    }
   }
 
   componentDidMount() {
