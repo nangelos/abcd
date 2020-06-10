@@ -27,7 +27,7 @@ router.put('/:id', async (req, res, next) => {
     const {id} = req.params
     const {body} = req
     console.log('here is the req.body: ', body)
-    const data = await ParentInfo.update({...body}, {where: {id: id}})
+    const data = await ParentInfo.update({...body}, {where: {userId: id}})
     res.json(data)
   } catch (err) {
     next(err)
@@ -39,7 +39,7 @@ router.get('/:id', async (req, res, next) => {
     console.log('get :id params: ', req.params)
     let {id} = req.params
     const user = await ParentInfo.findAll({
-      where: {id: id},
+      where: {userId: id},
     })
     res.json(user)
   } catch (err) {
