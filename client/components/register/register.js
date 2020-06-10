@@ -72,6 +72,10 @@ class Register extends Component {
 
   render() {
     const {user, parent, student} = this.props.state
+    let studentString
+    if (student.length) {
+      studentString = student.map((n) => n.studentFirst).join(' & ')
+    }
     const {addButtonHovered, numChildren} = this.state
     const style = addButtonHovered
       ? {paddingLeft: '10px'}
@@ -85,11 +89,35 @@ class Register extends Component {
       <div style={{textAlign: 'center'}}>
         <h2 style={{textAlign: 'left'}}>Register Your Student</h2>
         {parent[0] ? (
-          <div>
-            <h1>Your info is here</h1>
+          <div style={{width: '90%', display: 'inline-block'}}>
+            <h2>Parent Information</h2>
+            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+              <h3>{`Name: ${parent[0].parentFirst} ${parent[0].parentLast}`}</h3>
+              <h3>{`Phone: ${parent[0].parentCell}`}</h3>
+              <h3>{`Email: ${parent[0].parentEmail}`}</h3>
+            </div>
+            <h4 style={{textAlign: 'left', margin: '0px'}}>
+              *Visit Settings to Update Information
+            </h4>
           </div>
         ) : (
           <ParentInfo />
+        )}
+        {student[0] ? (
+          <div style={{width: '90%', display: 'inline-block'}}>
+            <h2>Student Information</h2>
+            <div style={{justifyContent: 'space-between'}}>
+              <h3>{`You have ${student.length} ${
+                student.length > 1 ? 'Students' : 'Student'
+              } Currently Registered: ${studentString}.`}</h3>
+              <h4 style={{margin: '0px', textAlign: 'left'}}>
+                *Register Additional Students Below, or Visit Settings to Update
+                Information.
+              </h4>
+            </div>
+          </div>
+        ) : (
+          ''
         )}
         {children.map((i) => (
           <StudentInfo key={i} />
