@@ -34,6 +34,16 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const {id} = req.params
+    const data = await StudentInfo.destroy({where: {id: id}})
+    res.json(data)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/:id', async (req, res, next) => {
   try {
     console.log('get :id params: ', req.params)

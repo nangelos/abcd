@@ -9,6 +9,7 @@ const GET_PARENT_STUDENT = 'GET_PARENT_STUDENT'
 const GET_ALL_STUDENT_INFO = 'GET_ALL_STUDENT_INFO'
 const CREATE_INFO = 'CREATE_INFO'
 const UPDATE_STUDENT_INFO = 'UPDATE_STUDENT_INFO'
+const DELETE_STUDENT = 'DELETE_STUDENT'
 
 /**
  * INITIAL STATE
@@ -23,6 +24,7 @@ const getParentStudent = (student) => ({type: GET_PARENT_STUDENT, student})
 const getAllStudentInfo = (student) => ({type: GET_ALL_STUDENT_INFO, student})
 const createStudentInfo = (student) => ({type: CREATE_INFO, student})
 const updateStudentInfo = (student) => ({type: UPDATE_STUDENT_INFO, student})
+const deleteStudent = (student) => ({type: DELETE_STUDENT, student})
 
 /**
  * THUNK CREATORS
@@ -87,6 +89,22 @@ export const changeStudentInfo = (id, info) => async (dispatch) => {
   }
 }
 
+export const removeStudent = (id, userId) => async (dispatch) => {
+  let res
+  try {
+    res = await axios.delete(`api/students/${id}`)
+    dispatch(deleteStudent(res))
+  } catch (err) {
+    console.log(err)
+  }
+  try {
+    const secRes = await axios.get(`api/students/user/${userId}`)
+    dispatch(getParentStudent(secRes.data || defaultStudent))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 /**
  * REDUCER
  */
@@ -101,6 +119,8 @@ export default function (state = defaultStudent, action) {
     case CREATE_INFO:
       return [...state, action.student]
     case UPDATE_STUDENT_INFO:
+      return action.student
+    case DELETE_STUDENT:
       return action.student
     default:
       return state

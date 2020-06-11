@@ -11,7 +11,7 @@ import {
   InfoRow,
   infoString,
 } from '../../constants'
-import {changeStudentInfo} from '../../store'
+import {changeStudentInfo, removeStudent} from '../../store'
 
 const DayButton = styled.button`
   // font-weight: ${(props) => (props.selected ? 'bold' : 'normal')};
@@ -32,6 +32,21 @@ const DayButton = styled.button`
     cursor: pointer;
   }
 `
+
+const DeleteButton = styled.input`
+  background: black;
+  color: white;
+  font-size: x-large;
+  border-radius: 5px;
+  height: 40px;
+  width: 40px;
+  &:hover {
+    opacity: 0.5;
+    border: white solid 2px;
+    cursor: pointer;
+  }
+`
+
 const StudentWrapper = styled.div`
   width: 90%;
   background: ${secondaryColor};
@@ -53,6 +68,15 @@ class StudentInput extends Component {
     thursdayRegistered: null,
     fridayRegistered: null,
     additionalInfo: null,
+    deleteButtonHovered: false,
+  }
+
+  onMouseEnter = (e) => {
+    this.setState({deleteButtonHovered: true})
+  }
+
+  onMouseLeave = (e) => {
+    this.setState({deleteButtonHovered: false})
   }
 
   handleTextboxChange = (evt) => {
@@ -66,6 +90,12 @@ class StudentInput extends Component {
     let newValue = !JSON.parse(value)
     // Would be nice to find a way that didn't require double click for already selected days
     this.setState({[newName]: newValue})
+  }
+
+  handleDeleteStudent = (evt) => {
+    evt.preventDefault()
+    const {student, deleteStudent} = this.props
+    deleteStudent(student.id, student.userId)
   }
 
   handleSubmit = () => {
@@ -85,10 +115,25 @@ class StudentInput extends Component {
 
   render() {
     let {student} = this.props
+    const style = this.state.deleteButtonHovered
+      ? {paddingLeft: '10px'}
+      : {visibility: 'hidden', paddingLeft: '10px'}
     return (
       <div style={{textAlign: 'center', width: '100%'}}>
         <StudentWrapper>
           <form onSubmit={this.handleSubmit}>
+            <div
+              style={{display: 'flex', textAlign: 'left', alignItems: 'center'}}
+            >
+              <DeleteButton
+                type="submit"
+                value="X"
+                onClick={this.handleDeleteStudent}
+                onMouseEnter={this.onMouseEnter}
+                onMouseLeave={this.onMouseLeave}
+              />
+              <p style={style}>Click to Delete Student</p>
+            </div>
             <InfoRow>
               <p style={{width: '120px'}}>Full Name</p>
               <InfoInput
@@ -196,5 +241,6 @@ class StudentInput extends Component {
 const mapState = (state) => ({state})
 const mapDispatch = (dispatch) => ({
   updateStudentInfo: (id, data) => dispatch(changeStudentInfo(id, data)),
+  deleteStudent: (id, userId) => dispatch(removeStudent(id, userId)),
 })
 export default connect(mapState, mapDispatch)(StudentInput)
