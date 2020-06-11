@@ -97,10 +97,6 @@ class StudentInfo extends Component {
     })
   }
 
-  componentWillUnmount() {
-    socket.disconnect()
-  }
-
   render() {
     return (
       <div style={{textAlign: 'center'}}>
