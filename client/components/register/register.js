@@ -88,15 +88,21 @@ class Register extends Component {
     return (
       <div style={{textAlign: 'center'}}>
         <h2 style={{textAlign: 'left'}}>Register Your Student</h2>
+        <h2>Parent Information</h2>
         {parent[0] ? (
-          <div style={{width: '90%', display: 'inline-block'}}>
-            <h2>Parent Information</h2>
+          <div
+            style={{
+              width: '90%',
+              display: 'inline-block',
+              background: secondaryColor,
+            }}
+          >
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
               <h3>{`Name: ${parent[0].parentFirst} ${parent[0].parentLast}`}</h3>
               <h3>{`Phone: ${parent[0].parentCell}`}</h3>
               <h3>{`Email: ${parent[0].parentEmail}`}</h3>
             </div>
-            <h4 style={{textAlign: 'left', margin: '0px'}}>
+            <h4 style={{textAlign: 'left', margin: '0px 0px 10px'}}>
               *Visit Settings to Update Information
             </h4>
           </div>
@@ -116,7 +122,7 @@ class Register extends Component {
               <h3>{`You have ${student.length} ${
                 student.length > 1 ? 'Students' : 'Student'
               } Currently Registered: ${studentString}.`}</h3>
-              <h4 style={{margin: '0px 0px 10px', textAlign: 'left'}}>
+              <h4 style={{textAlign: 'left', margin: '0px 0px 10px'}}>
                 *Register Additional Students Below, or Visit Settings to Update
                 Information.
               </h4>

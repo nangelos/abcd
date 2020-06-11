@@ -94,10 +94,13 @@ class ParentInfo extends Component {
     })
   }
 
+  componentWillUnmount() {
+    socket.disconnect()
+  }
+
   render() {
     return (
       <div style={{textAlign: 'center'}}>
-        <h2>Parent Information</h2>
         <ParentWrapper>
           <form onSubmit={this.handleSubmit}>
             <InfoRow>
