@@ -97,10 +97,13 @@ class StudentInfo extends Component {
     })
   }
 
+  componentWillUnmount() {
+    socket.disconnect()
+  }
+
   render() {
     return (
       <div style={{textAlign: 'center'}}>
-        <h2 style={{textAlign: 'center'}}>Student Information</h2>
         <StudentWrapper>
           <form onSubmit={this.handleSubmit}>
             <InfoRow>

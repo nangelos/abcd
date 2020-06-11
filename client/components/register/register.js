@@ -103,14 +103,20 @@ class Register extends Component {
         ) : (
           <ParentInfo />
         )}
+        <h2>Student Information</h2>
         {student[0] ? (
-          <div style={{width: '90%', display: 'inline-block'}}>
-            <h2>Student Information</h2>
+          <div
+            style={{
+              width: '90%',
+              display: 'inline-block',
+              background: secondaryColor,
+            }}
+          >
             <div style={{justifyContent: 'space-between'}}>
               <h3>{`You have ${student.length} ${
                 student.length > 1 ? 'Students' : 'Student'
               } Currently Registered: ${studentString}.`}</h3>
-              <h4 style={{margin: '0px', textAlign: 'left'}}>
+              <h4 style={{margin: '0px 0px 10px', textAlign: 'left'}}>
                 *Register Additional Students Below, or Visit Settings to Update
                 Information.
               </h4>
