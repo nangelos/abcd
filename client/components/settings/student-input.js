@@ -95,7 +95,10 @@ class StudentInput extends Component {
   handleDeleteStudent = (evt) => {
     evt.preventDefault()
     const {student, deleteStudent} = this.props
-    deleteStudent(student.id, student.userId)
+    let r = confirm(`Are you sure you want to delete ${student.studentFirst}?`)
+    if (r === true) {
+      deleteStudent(student.id, student.userId)
+    }
   }
 
   handleSubmit = () => {
