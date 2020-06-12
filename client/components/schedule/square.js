@@ -41,12 +41,16 @@ class Square extends Component {
     socket.on('submitClick', () => {
       const {date, student, weekend, month, year} = this.props
       const {absent} = this.state
-      if (absent && !weekend) {
+      if (absent && !weekend && student) {
         console.log(
           `${student.studentFirst} will be absent on ${month}, ${date} ${year}`
         )
       }
     })
+  }
+
+  componentWillUnmount() {
+    socket.off('submitClick')
   }
 
   render() {
@@ -55,9 +59,10 @@ class Square extends Component {
       <div>
         <CalendarSquare
           name="square"
-          value={this.state.absent}
-          absent={this.state.absent}
+          value={`${props.month} ${props.date}`}
+          absent={props.absent || this.state.absent}
           weekend={props.weekend}
+          student={props.student}
           onClick={this.changeBinary}
         >
           {props.date}

@@ -191,11 +191,16 @@ class Schedule extends Component {
                       </tr>
                       <tr>
                         {week1.map((day) => (
-                          <td key={day.id || day.date}>
+                          <td
+                            key={
+                              day.id || `${selectedChild}-${month}-${day.date}`
+                            }
+                          >
                             <Square
                               year={year}
                               month={calendar[month].month}
                               date={day.date}
+                              absent={false}
                               weekend={
                                 day.date === '' ||
                                 weekend.includes(day.day) ||
@@ -211,11 +216,16 @@ class Schedule extends Component {
                       </tr>
                       <tr>
                         {week2.map((day) => (
-                          <td key={day.id || day.date}>
+                          <td
+                            key={
+                              day.id || `${selectedChild}-${month}-${day.date}`
+                            }
+                          >
                             <Square
                               year={year}
                               month={calendar[month].month}
                               date={day.date}
+                              absent={false}
                               weekend={
                                 day.date === '' ||
                                 weekend.includes(day.day) ||
@@ -231,7 +241,11 @@ class Schedule extends Component {
                       </tr>
                       <tr>
                         {week3.map((day) => (
-                          <td key={day.id || day.date}>
+                          <td
+                            key={
+                              day.id || `${selectedChild}-${month}-${day.date}`
+                            }
+                          >
                             <Square
                               year={year}
                               month={calendar[month].month}
@@ -251,7 +265,11 @@ class Schedule extends Component {
                       </tr>
                       <tr>
                         {week4.map((day) => (
-                          <td key={day.id || day.date}>
+                          <td
+                            key={
+                              day.id || `${selectedChild}-${month}-${day.date}`
+                            }
+                          >
                             <Square
                               year={year}
                               month={calendar[month].month}
@@ -271,7 +289,11 @@ class Schedule extends Component {
                       </tr>
                       <tr>
                         {week5.map((day) => (
-                          <td key={day.id || day.date}>
+                          <td
+                            key={
+                              day.id || `${selectedChild}-${month}-${day.date}`
+                            }
+                          >
                             <Square
                               year={year}
                               month={calendar[month].month}
@@ -293,7 +315,12 @@ class Schedule extends Component {
                         {week6.length === 7 &&
                           week6[0].id !== '010' &&
                           week6.map((day) => (
-                            <td key={day.id || day.date}>
+                            <td
+                              key={
+                                day.id ||
+                                `${selectedChild}-${month}-${day.date}`
+                              }
+                            >
                               <Square
                                 year={year}
                                 month={calendar[month].month}
