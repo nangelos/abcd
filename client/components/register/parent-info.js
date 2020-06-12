@@ -94,6 +94,10 @@ class ParentInfo extends Component {
     })
   }
 
+  componentWillUnmount() {
+    socket.off('submitClick')
+  }
+
   render() {
     return (
       <div style={{textAlign: 'center'}}>
