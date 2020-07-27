@@ -10,18 +10,6 @@ const Absences = db.define('absences', {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  parentFirst: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  parentLast: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  userId: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
   year: {
     type: Sequelize.STRING,
   },

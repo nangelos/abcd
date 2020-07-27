@@ -6,7 +6,7 @@ const Absences = require('./absences')
 //Associations
 ParentInfo.belongsTo(User)
 StudentInfo.belongsTo(User)
-Absences.belongsTo(StudentInfo, {as: 'Student'})
+Absences.belongsTo(StudentInfo, {as: 'student'})
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,

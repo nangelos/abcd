@@ -25,7 +25,6 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   const {body} = req
-  console.log('Absence post req.body: ', body)
   try {
     const info = await Absences.create({...body})
     res.json(info)
