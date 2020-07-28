@@ -103,9 +103,8 @@ class Schedule extends Component {
 
   componentDidMount() {
     const {user} = this.props.state
-    const {getAllStudentInfo /*, getStudentAbsences*/} = this.props
+    const {getAllStudentInfo} = this.props
     getAllStudentInfo(user.id)
-    // getStudentAbsences(1)
   }
 
   handleTextboxChange = (evt) => {
@@ -201,7 +200,7 @@ class Schedule extends Component {
                               year={year}
                               month={calendar[month].month}
                               date={day.date}
-                              absent={false}
+                              absent={true}
                               weekend={
                                 day.date === '' ||
                                 weekend.includes(day.day) ||

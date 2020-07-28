@@ -9,8 +9,8 @@ const CalendarSquare = styled.button`
   type: submit;
   background: ${(p) =>
     p.weekend ? 'gray' : p.absent ? primaryColor : 'white'};
-  color: ${(p) => (p.absent ? 'white' : 'black')};
-  font-weight: ${(p) => (p.absent ? 'bold' : 'normal')};
+  color: ${(p) => (p.weekend ? 'black' : p.absent ? 'white' : 'black')};
+  font-weight: ${(p) => (p.weekend ? 'normal' : p.absent ? 'bold' : 'normal')};
   padding: 10px;
   height: 80px;
   width: 100px;
