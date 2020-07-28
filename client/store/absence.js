@@ -13,7 +13,7 @@ const DELETE_ABSENCE = 'DELETE_ABSENCE'
 /**
  * INITIAL STATE
  */
-const defaultAbsence = [{}]
+const defaultAbsence = []
 
 /**
  * ACTION CREATORS
@@ -48,15 +48,9 @@ export const addAbsence = (info) => async (dispatch) => {
   let res
   try {
     res = await axios.post(`api/absences`, info)
+    dispatch(createAbsence(res.data))
   } catch (err) {
-    return dispatch(createAbsence({error: err}))
-  }
-  try {
-    console.log('here is addAb res: ', res)
-    dispatch(getStudentAbsences(res.data))
-    // history.push('/schedule')
-  } catch (dispatchOrHistoryErr) {
-    console.error(dispatchOrHistoryErr)
+    console.error(err)
   }
 }
 
@@ -84,7 +78,7 @@ export default function (state = defaultAbsence, action) {
     case GET_STUDENT_ABSENCES:
       return [...state, action.data]
     case CREATE_ABSENCE:
-      return [...state, action.data]
+      return action.data
     case UPDATE_ABSENCE:
       return action.data
     default:
