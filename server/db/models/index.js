@@ -1,12 +1,13 @@
 const User = require('./user')
 const ParentInfo = require('./parent-info')
-const StudentInfo = require('./student-info')
+const Student = require('./students')
 const Absences = require('./absences')
 
 //Associations
 ParentInfo.belongsTo(User)
-StudentInfo.belongsTo(User)
-Absences.belongsTo(StudentInfo, {as: 'student'})
+Student.belongsTo(User)
+Absences.belongsTo(Student)
+Student.hasMany(Absences)
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -17,6 +18,6 @@ Absences.belongsTo(StudentInfo, {as: 'student'})
 module.exports = {
   User,
   ParentInfo,
-  StudentInfo,
+  Student,
   Absences,
 }

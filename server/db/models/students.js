@@ -11,7 +11,7 @@ const gradesList = [
   'Third',  'Fourth',  'Fifth',  'Sixth',
 ]
 
-const StudentInfo = db.define('student-info', {
+const Student = db.define('students', {
   studentFirst: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -59,4 +59,4 @@ const StudentInfo = db.define('student-info', {
   },
 })
 
-module.exports = StudentInfo
+module.exports = Student
