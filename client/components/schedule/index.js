@@ -103,8 +103,9 @@ class Schedule extends Component {
 
   componentDidMount() {
     const {user} = this.props.state
-    const {getAllStudentInfo} = this.props
+    const {getAllStudentInfo /*, getStudentAbsences*/} = this.props
     getAllStudentInfo(user.id)
+    // getStudentAbsences(1)
   }
 
   handleTextboxChange = (evt) => {
