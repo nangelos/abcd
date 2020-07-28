@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import styled from 'styled-components'
 import socket from '../../socket'
 import {primaryColor, secondaryColor} from '../../constants'
+import {addAbsence, fetchStudentAbsences} from '../../store'
 
 const CalendarSquare = styled.button`
   type: submit;
@@ -39,12 +41,19 @@ class Square extends Component {
 
   componentDidMount() {
     socket.on('submitClick', () => {
-      const {date, student, weekend, month, year} = this.props
+      const {date, student, weekend, month, year, createAbsence} = this.props
       const {absent} = this.state
+      const data = {
+        studentFirst: student.studentFirst,
+        studentLast: student.studentLast,
+        year,
+        month,
+        date,
+        absent,
+        studentId: student.id,
+      }
       if (absent && !weekend && student) {
-        console.log(
-          `${student.studentFirst} will be absent on ${month}, ${date} ${year}`
-        )
+        createAbsence(data)
       }
     })
   }
@@ -77,5 +86,9 @@ class Square extends Component {
     )
   }
 }
-
-export default Square
+// const mapState = (state) => ({state})
+const mapDispatch = (dispatch) => ({
+  createAbsence: (info) => dispatch(addAbsence(info)),
+  getStudentAbsences: (id) => dispatch(fetchStudentAbsences(id)),
+})
+export default connect(null, mapDispatch)(Square)

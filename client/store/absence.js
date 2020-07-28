@@ -80,9 +80,9 @@ export const changeAbsence = (id, info) => async (dispatch) => {
 export default function (state = defaultAbsence, action) {
   switch (action.type) {
     case GET_ALL_ABSENCES:
-      return action.data
+      return [...state, action.data]
     case GET_STUDENT_ABSENCES:
-      return action.data
+      return [...state, action.data]
     case CREATE_ABSENCE:
       return [...state, action.data]
     case UPDATE_ABSENCE:
