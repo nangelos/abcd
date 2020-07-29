@@ -34,21 +34,26 @@ router.post('/', async (req, res, next) => {
 })
 
 router.put('/:id', async (req, res, next) => {
-  const {id} = req.params
+  // const {id} = req.params
   const {body} = req
-  console.log('in the Absence put route: ', id, body)
+  const {studentId, year, month, date} = body
   try {
-    const info = await Absences.update({...body}, {where: {id: id}})
-    res.json(info)
+    const info = await Absences.update(
+      {...body},
+      {where: {studentId, year, month, date}}
+    )
+    res.status(201).json(info)
   } catch (err) {
     next(err)
   }
 })
 
 router.delete('/:id', async (req, res, next) => {
-  const {id} = req.params
+  // const {id} = req.params
+  const {body} = req
+  const {studentId, year, month, date} = body
   try {
-    const data = await Absences.destroy({where: {id: id}})
+    const data = await Absences.destroy({where: {studentId, year, month, date}})
     res.json(data)
   } catch (err) {
     next(err)
