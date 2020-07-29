@@ -29,13 +29,13 @@ const CalendarSquare = styled.button`
 `
 
 class Square extends Component {
-  state = {absent: false}
+  state = {absent: false, dirty: false}
 
   changeBinary = (evt) => {
     evt.preventDefault()
     const {weekend} = this.props
     if (!weekend) {
-      this.setState((prevState) => ({absent: !prevState.absent}))
+      this.setState((prevState) => ({absent: !prevState.absent, dirty: true}))
     }
   }
 
@@ -62,14 +62,39 @@ class Square extends Component {
     socket.off('submitClick')
   }
 
+  fakeDate = {
+    studentId: 1,
+    year: 2020,
+    month: 'July',
+    date: 30,
+  }
+  checkAbsent = (data, props) => {
+    const {student, month, date, year} = props
+    if (
+      data.studentId === student.id &&
+      data.year === year &&
+      data.month === month &&
+      data.date === date
+    ) {
+      console.log(data.date, ' : ', date)
+      return true
+    }
+  }
+
   render() {
     const props = this.props
+    const {dirty} = this.state
+    this.checkAbsent(this.fakeDate, props)
     return (
       <div>
         <CalendarSquare
           name="square"
           value={`${props.month} ${props.date}`}
-          absent={props.absent || this.state.absent}
+          // absent={props.absent || this.state.absent}
+          absent={
+            (!dirty && this.checkAbsent(this.fakeDate, props)) ||
+            this.state.absent
+          }
           weekend={props.weekend}
           student={props.student}
           onClick={this.changeBinary}
