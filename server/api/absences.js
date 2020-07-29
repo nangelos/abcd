@@ -49,11 +49,17 @@ router.put('/:id', async (req, res, next) => {
 })
 
 router.delete('/:id', async (req, res, next) => {
-  // const {id} = req.params
   const {body} = req
   const {studentId, year, month, date} = body
   try {
-    const data = await Absences.destroy({where: {studentId, year, month, date}})
+    const data = await Absences.destroy({
+      where: {
+        studentId: studentId.toString(),
+        year: year.toString(),
+        month,
+        date: date.toString(),
+      },
+    })
     res.json(data)
   } catch (err) {
     next(err)
