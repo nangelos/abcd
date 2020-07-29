@@ -200,7 +200,7 @@ class Schedule extends Component {
                               year={year}
                               month={calendar[month].month}
                               date={day.date}
-                              absent={true}
+                              absent={false}
                               weekend={
                                 day.date === '' ||
                                 weekend.includes(day.day) ||
@@ -297,6 +297,7 @@ class Schedule extends Component {
                             <Square
                               year={year}
                               month={calendar[month].month}
+                              absent={true}
                               date={day.date}
                               weekend={
                                 day.date === '' ||

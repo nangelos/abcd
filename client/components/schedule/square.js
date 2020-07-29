@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import styled from 'styled-components'
 import socket from '../../socket'
 import {primaryColor, secondaryColor} from '../../constants'
-import {addAbsence, fetchStudentAbsences} from '../../store'
+import {addAbsence, fetchStudentAbsences, destroyAbsence} from '../../store'
 
 const CalendarSquare = styled.button`
   type: submit;
@@ -41,8 +41,11 @@ class Square extends Component {
 
   componentDidMount() {
     socket.on('submitClick', () => {
-      const {date, student, weekend, month, year, createAbsence} = this.props
-      const {absent} = this.state
+      const {date, month, year, student, weekend} = this.props
+      const {createAbsence, deleteAbsence} = this.props
+      const {absences} = student
+      const alreadyAbsent = this.checkAbsent(absences, this.props)
+      const {absent, dirty} = this.state
       const data = {
         studentFirst: student.studentFirst,
         studentLast: student.studentLast,
@@ -52,7 +55,9 @@ class Square extends Component {
         absent,
         studentId: student.id,
       }
-      if (absent && !weekend && student) {
+      if (alreadyAbsent && !absent && dirty) {
+        deleteAbsence(student.id, data)
+      } else if (absent && !weekend && student) {
         createAbsence(data)
       }
     })
@@ -68,31 +73,33 @@ class Square extends Component {
     month: 'July',
     date: 30,
   }
-  checkAbsent = (data, props) => {
+  checkAbsent = (arr, props) => {
     const {student, month, date, year} = props
-    if (
-      data.studentId === student.id &&
-      data.year === year &&
-      data.month === month &&
-      data.date === date
-    ) {
-      console.log(data.date, ' : ', date)
-      return true
+    for (let i = 0; i < arr.length; i++) {
+      if (
+        arr[i].absent &&
+        arr[i].studentId === student.id &&
+        Number(arr[i].year) === year &&
+        arr[i].month === month &&
+        Number(arr[i].date) === date
+      ) {
+        return true
+      }
     }
+    return false
   }
 
   render() {
     const props = this.props
     const {dirty} = this.state
-    this.checkAbsent(this.fakeDate, props)
     return (
       <div>
         <CalendarSquare
           name="square"
           value={`${props.month} ${props.date}`}
-          // absent={props.absent || this.state.absent}
           absent={
-            (!dirty && this.checkAbsent(this.fakeDate, props)) ||
+            (!dirty &&
+              this.checkAbsent(props.student.absences || [0, 1], props)) ||
             this.state.absent
           }
           weekend={props.weekend}
@@ -111,9 +118,11 @@ class Square extends Component {
     )
   }
 }
-// const mapState = (state) => ({state})
+
 const mapDispatch = (dispatch) => ({
   createAbsence: (info) => dispatch(addAbsence(info)),
   getStudentAbsences: (id) => dispatch(fetchStudentAbsences(id)),
+  deleteAbsence: (id, info) => dispatch(destroyAbsence(id, info)),
 })
+
 export default connect(null, mapDispatch)(Square)

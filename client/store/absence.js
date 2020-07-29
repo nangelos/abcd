@@ -22,6 +22,7 @@ const getAllAbsences = (data) => ({type: GET_ALL_ABSENCES, data})
 const getStudentAbsences = (data) => ({type: GET_STUDENT_ABSENCES, data})
 const createAbsence = (data) => ({type: CREATE_ABSENCE, data})
 const updateAbsence = (data) => ({type: UPDATE_ABSENCE, data})
+const deleteAbsence = (data) => ({type: DELETE_ABSENCE, data})
 
 /**
  * THUNK CREATORS
@@ -68,6 +69,20 @@ export const changeAbsence = (id, info) => async (dispatch) => {
   }
 }
 
+export const destroyAbsence = (id, info) => async (dispatch) => {
+  let res
+  try {
+    res = await axios.delete(`api/absences/${id}`, {data: info})
+  } catch (err) {
+    console.error(err)
+  }
+  try {
+    dispatch(deleteAbsence(res.data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 /**
  * REDUCER
  */
@@ -80,6 +95,8 @@ export default function (state = defaultAbsence, action) {
     case CREATE_ABSENCE:
       return action.data
     case UPDATE_ABSENCE:
+      return action.data
+    case DELETE_ABSENCE:
       return action.data
     default:
       return state
