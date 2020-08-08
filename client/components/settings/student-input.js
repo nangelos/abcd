@@ -18,7 +18,7 @@ const DayButton = styled.button`
   background: ${(props) => (props.selected ? primaryColor : 'white')};
   color: ${(props) => (props.selected ? 'white' : 'black')};
   border: ${(props) =>
-    props.selected ? `5px white solid` : '2px black solid'};
+    props.selected ? `2px white solid` : '2px black solid'};
   border-radius: 5px;
   font-size: large;
   font-weight: normal;
