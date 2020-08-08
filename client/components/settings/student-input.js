@@ -22,8 +22,8 @@ const DayButton = styled.button`
   border-radius: 5px;
   font-size: large;
   font-weight: normal;
-  height: 120px;
-  width: 120px;
+  height: 130px;
+  width: 130px;
   display: flex;
   align-items: center;
   justify-content: center;
