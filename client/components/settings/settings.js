@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {secondaryColor, primaryColor} from '../../constants'
 import ParentUpdate from './parent-update'
 import StudentUpdate from './student-update'
+import Payment from './payment'
 
 const SettingsWrapper = styled.div`
   display: inline-block;
@@ -88,7 +89,7 @@ class Settings extends Component {
               ) : active === 'StudentInfo' ? (
                 <StudentUpdate userId={userId} />
               ) : (
-                <h1>Payment Info</h1>
+                <Payment userId={userId} />
               )}
             </SettingsUpdate>
           </div>

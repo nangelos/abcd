@@ -15,6 +15,7 @@ import {
   infoString,
 } from '../../constants'
 import StudentInfo from './student-info'
+import {element} from 'prop-types'
 
 const AddButton = styled.input`
   background: black;
@@ -63,11 +64,11 @@ class Register extends Component {
   }
 
   handleSubmit = (evt) => {
-    // evt.preventDefault()
+    evt.preventDefault()
     socket.emit('submitClick', (data) => {
-      console.log('submit was clicked')
       console.log(data)
     })
+    // while (this.state.numChildren > 0) {}
   }
 
   render() {
@@ -129,10 +130,20 @@ class Register extends Component {
             </div>
           </div>
         ) : (
-          ''
+          <div
+            style={{
+              width: '91%',
+              display: 'inline-block',
+              background: secondaryColor,
+            }}
+          >
+            <h4 style={{textAlign: 'left', margin: '10px 0px 10px'}}>
+              Click Below to Register Students
+            </h4>
+          </div>
         )}
-        {children.map((i) => (
-          <StudentInfo key={i} />
+        {children.map((n) => (
+          <StudentInfo key={n} />
         ))}
         <div style={{textAlign: 'center'}}>
           <div style={{display: 'inline-block', width: '90%'}}>
