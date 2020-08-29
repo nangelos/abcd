@@ -24,7 +24,7 @@ class ParentInfo extends Component {
     parentFirst: '',
     parentLast: '',
     parentCell: '',
-    parentWork: null,
+    parentWork: '',
     parentEmail: '',
     parentAddress: '',
     parentCity: '',
@@ -32,15 +32,15 @@ class ParentInfo extends Component {
     parentZip: '',
     eContactName1: '',
     eContactPhone1: '',
-    eContactName2: null,
-    eContactPhone2: null,
+    eContactName2: '',
+    eContactPhone2: '',
   }
 
   defaultState = {
     parentFirst: '',
     parentLast: '',
     parentCell: '',
-    parentWork: null,
+    parentWork: '',
     parentEmail: '',
     parentAddress: '',
     parentCity: '',
@@ -48,8 +48,8 @@ class ParentInfo extends Component {
     parentZip: '',
     eContactName1: '',
     eContactPhone1: '',
-    eContactName2: null,
-    eContactPhone2: null,
+    eContactName2: '',
+    eContactPhone2: '',
   }
 
   handleTextboxChange = (evt) => {
@@ -57,24 +57,36 @@ class ParentInfo extends Component {
     this.setState({[name]: value})
   }
 
-  formatPhoneNbrs = (obj) => {
-    const nums = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-    const phones = [
-      'parentCell',
-      'parentWork',
-      'eContactPhone1',
-      'eContactPhone2',
-    ]
-    Object.keys(obj).forEach((key) => {
-      if (phones.includes(key) && obj[key] !== null) {
-        let raw = obj[key]
-        raw = raw.split('').filter((n) => nums.includes(n))
-        raw.splice(6, 0, '-')
-        raw.splice(3, 0, '-')
-        let final = raw.join('')
-        obj[key] = final
-      }
-    })
+  handlePhoneChange = (evt) => {
+    let {name, value} = evt.target
+    if (value[0] && value[0] !== '(') {
+      let arr = value.split('')
+      arr.unshift('(')
+      value = arr.join('')
+    }
+    if (value[3] && value[4] !== ')' && !value.includes(')')) {
+      let arr = value.split('')
+      arr.splice(4, 0, ') ')
+      value = arr.join('')
+    }
+    if (value[9] && value[9] !== '-') {
+      let arr = value.split('')
+      arr.splice(9, 0, '-')
+      value = arr.join('')
+    }
+    this.setState({[name]: value})
+  }
+
+  makeBlanksNull(obj) {
+    if (obj.parentWork === '') {
+      obj.parentWork = null
+    }
+    if (obj.eContactName2 === '') {
+      obj.eContactName2 = null
+    }
+    if (obj.eContactPhone2 === '') {
+      obj.eContactPhone2 = null
+    }
     return obj
   }
 
@@ -83,7 +95,7 @@ class ParentInfo extends Component {
       const {createParentInfo} = this.props
       const userId = this.props.state.user.id
       this.setState({userId})
-      let formatted = this.formatPhoneNbrs(this.state)
+      let formatted = this.makeBlanksNull(this.state)
       createParentInfo(formatted)
     }
   }
@@ -125,13 +137,15 @@ class ParentInfo extends Component {
                 placeholder="Cell Phone"
                 style={{width: '180px'}}
                 required
-                onChange={this.handleTextboxChange}
+                onChange={this.handlePhoneChange}
+                value={this.state.parentCell}
               />
               <InfoInput
                 name="parentWork"
                 placeholder="Work Phone"
                 style={{width: '180px'}}
-                onChange={this.handleTextboxChange}
+                onChange={this.handlePhoneChange}
+                value={this.state.parentWork}
               />
               <InfoInput
                 name="parentEmail"
@@ -198,7 +212,8 @@ class ParentInfo extends Component {
                     placeholder="Phone Number"
                     style={{width: '180px'}}
                     required
-                    onChange={this.handleTextboxChange}
+                    onChange={this.handlePhoneChange}
+                    value={this.state.eContactPhone1}
                   />
                 </InfoRow>
                 <InfoRow style={{margin: '0px'}}>
@@ -212,7 +227,8 @@ class ParentInfo extends Component {
                     name="eContactPhone2"
                     placeholder="Phone Number"
                     style={{width: '180px'}}
-                    onChange={this.handleTextboxChange}
+                    onChange={this.handlePhoneChange}
+                    value={this.state.eContactPhone2}
                   />
                 </InfoRow>
               </div>
