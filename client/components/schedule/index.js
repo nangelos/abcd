@@ -120,7 +120,7 @@ class Schedule extends Component {
       alert('Please select a student to update their schedule.')
     } else {
       socket.emit('submitClick', (data) => {
-        console.log('submit was clicked')
+        // console.log('submit was clicked')
         console.log(data)
       })
     }
